@@ -2255,28 +2255,77 @@ async function generateContent() {
     `=== ${a.franchise} — ${a.focus} (${a.period}) ===\n${a.text}`
   ).join('\n\n');
 
-  const prompt = `Based on these SERVPRO call intelligence analyses, generate a ready-to-use content pack. Format your response with clear sections:
+  const prompt = `Based on these SERVPRO call intelligence analyses, generate a complete ready-to-use content pack formatted for direct use in Publer (social scheduling) and Canva (design). Use exact customer language from the transcripts throughout — never generic marketing speak.
 
-## AD COPY (Google Ads — 5 headlines, 2 descriptions each)
-Write for water damage, mold, and fire restoration. Use exact customer language from the analyses.
+---
+## GOOGLE ADS HEADLINES (10 headlines, max 30 characters each)
+One per line, numbered. Ready to paste into Google Ads.
 
-## FACEBOOK/INSTAGRAM POSTS (5 posts)
-Mix of urgency, trust-building, and educational. Include a call-to-action each time. Keep under 150 words each.
+## GOOGLE ADS DESCRIPTIONS (5 descriptions, max 90 characters each)
+One per line, numbered. Ready to paste into Google Ads.
 
-## GOOGLE BUSINESS PROFILE POSTS (5 posts)
-Short, local, service-specific. 100-150 words each. Include what to do next.
+## FACEBOOK POST 1 — EMERGENCY/URGENCY
+[Franchise]: [franchise name]
+[Caption]: Write the full post copy here. Under 150 words. Include a call to action.
+[Hashtags]: 5-7 relevant hashtags on one line
+
+## FACEBOOK POST 2 — TRUST/REASSURANCE
+[Franchise]: [franchise name]
+[Caption]: Write the full post copy here. Under 150 words. Include a call to action.
+[Hashtags]: 5-7 relevant hashtags on one line
+
+## FACEBOOK POST 3 — EDUCATION/AWARENESS
+[Franchise]: [franchise name]
+[Caption]: Write the full post copy here. Under 150 words. Include a call to action.
+[Hashtags]: 5-7 relevant hashtags on one line
+
+## FACEBOOK POST 4 — INSURANCE/OBJECTION
+[Franchise]: All franchises
+[Caption]: Write the full post copy here. Under 150 words. Include a call to action.
+[Hashtags]: 5-7 relevant hashtags on one line
+
+## FACEBOOK POST 5 — SEASONAL/LOCAL
+[Franchise]: [franchise name]
+[Caption]: Write the full post copy here. Under 150 words. Include a call to action.
+[Hashtags]: 5-7 relevant hashtags on one line
+
+## INSTAGRAM CAPTIONS (3 short captions, under 100 words each)
+FORMAT — Caption 1:
+[Visual idea]: Describe what the Canva graphic should show
+[Caption]: The Instagram caption text
+[Hashtags]: 8-10 hashtags
+
+FORMAT — Caption 2:
+[Visual idea]: Describe what the Canva graphic should show
+[Caption]: The Instagram caption text
+[Hashtags]: 8-10 hashtags
+
+FORMAT — Caption 3:
+[Visual idea]: Describe what the Canva graphic should show
+[Caption]: The Instagram caption text
+[Hashtags]: 8-10 hashtags
+
+## GOOGLE BUSINESS PROFILE POSTS (5 posts, 100-150 words each)
+One per franchise. Label each with the franchise name.
+
+## CANVA GRAPHIC TEXT (5 graphic text sets)
+For each, provide:
+[Headline]: Short bold text for top of graphic (under 8 words)
+[Subheadline]: Supporting line (under 12 words)
+[Body]: 1-2 sentences of supporting copy
+[CTA]: Call to action button text (under 5 words)
 
 ## CUSTOMER LANGUAGE SWIPE FILE
-List 15-20 exact phrases customers used that should appear in all marketing materials.
+20 exact phrases from customer calls to use across all content. Numbered list.
 
-## EMAIL SUBJECT LINES (10)
-For follow-up sequences to leads and not-sold jobs.
-
-## OBJECTION RESPONSES (5)
-For the most common objections heard in these calls — with suggested responses for the sales team.
+## EMAIL SUBJECT LINES (10, one per line, numbered)
+Mix of follow-up, re-engagement, and educational.
 
 Here are the analyses:
-${combined}`;
+\${combined}\`;`
+
+// replace the closing backtick that was part of old_prompt
+`;
 
   document.getElementById('content-library-items').innerHTML = '<div style="text-align:center;padding:32px;color:var(--text-muted);"><div style="display:flex;gap:5px;justify-content:center;margin-bottom:10px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--electric);display:inline-block;animation:blink 1.2s infinite;"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--electric);display:inline-block;animation:blink 1.2s .2s infinite;"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--electric);display:inline-block;animation:blink 1.2s .4s infinite;"></span></div>Claude is generating your content pack…</div>';
 
@@ -2286,7 +2335,7 @@ ${combined}`;
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
+        max_tokens: 4000,
         system: 'You are a master copywriter and digital marketing strategist for SERVPRO of Central Pennsylvania. You write compelling, conversion-focused marketing content based on real customer call data. Always use the specific language customers used in calls — never generic marketing speak.',
         messages: [{ role: 'user', content: prompt }]
       })
@@ -2314,17 +2363,21 @@ function renderContentLibrary(filter) {
   el.style.display = 'block';
   el.innerHTML = contentItems.map((item, i) => `
     <div style="background:white;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:20px;margin-bottom:14px;box-shadow:var(--shadow);">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
         <div>
-          <div style="font-size:13px;font-weight:700;color:var(--electric);margin-bottom:3px;">Generated content pack</div>
+          <div style="font-size:14px;font-weight:700;color:var(--electric);margin-bottom:3px;">Content pack</div>
           <div style="font-size:11px;color:var(--text-muted);">From: ${item.sources} · ${new Date(item.generatedAt).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</div>
         </div>
-        <div style="display:flex;gap:7px;">
-          <button onclick="copyContent(${i})" style="background:var(--electric-bg);border:none;border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--electric);cursor:pointer;" id="copy-btn-${i}">Copy all</button>
-          <button onclick="deleteContent(${i})" style="background:var(--pop-bg);border:none;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:700;color:var(--pop);cursor:pointer;">Delete</button>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;">
+          <button onclick="copyContent(${i})" style="background:var(--electric-bg);border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;color:var(--electric);cursor:pointer;" id="copy-btn-${i}">📋 Copy all</button>
+          <button onclick="downloadTXT(${i})" style="background:var(--lime-bg);border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;color:#00A370;cursor:pointer;">⬇ Download .txt</button>
+          <button onclick="copySection(${i},'FACEBOOK')" style="background:var(--sky-bg);border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;color:#007ACC;cursor:pointer;" id="fb-btn-${i}">Copy FB posts</button>
+          <button onclick="copySection(${i},'GOOGLE ADS')" style="background:var(--sun-bg);border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;color:#CC8F00;cursor:pointer;" id="ads-btn-${i}">Copy Google Ads</button>
+          <button onclick="copySection(${i},'CANVA')" style="background:var(--magenta-bg);border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;color:var(--magenta);cursor:pointer;" id="canva-btn-${i}">Copy Canva text</button>
+          <button onclick="deleteContent(${i})" style="background:var(--pop-bg);border:none;border-radius:6px;padding:7px 10px;font-size:12px;font-weight:700;color:var(--pop);cursor:pointer;">Delete</button>
         </div>
       </div>
-      <div style="background:var(--bg-off);border:1px solid var(--border);border-radius:9px;padding:16px;font-size:13px;line-height:1.7;color:var(--text-mid);white-space:pre-wrap;max-height:320px;overflow-y:auto;">${item.text}</div>
+      <div style="background:var(--bg-off);border:1px solid var(--border);border-radius:9px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-mid);white-space:pre-wrap;overflow-y:auto;max-height:500px;font-family:'Space Mono',monospace;">${item.text}</div>
     </div>`).join('');
 }
 
@@ -2340,6 +2393,47 @@ function deleteContent(i) {
   contentItems.splice(i, 1);
   localStorage.setItem('servpro_content_items', JSON.stringify(contentItems));
   renderContentLibrary('all');
+}
+
+function downloadTXT(i) {
+  const item = contentItems[i];
+  const date = new Date(item.generatedAt).toISOString().slice(0,10);
+  const blob = new Blob([item.text], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `SERVPRO_Content_Pack_${date}.txt`;
+  a.click();
+}
+
+function copySection(i, sectionKeyword) {
+  const text = contentItems[i].text;
+  const lines = text.split('\n');
+  let inSection = false;
+  let sectionLines = [];
+  for (let j = 0; j < lines.length; j++) {
+    const line = lines[j];
+    if (line.includes('##') && line.toUpperCase().includes(sectionKeyword.toUpperCase())) {
+      inSection = true;
+      sectionLines.push(line);
+    } else if (inSection && line.startsWith('## ') && !line.toUpperCase().includes(sectionKeyword.toUpperCase())) {
+      break;
+    } else if (inSection) {
+      sectionLines.push(line);
+    }
+  }
+  if (!sectionLines.length) {
+    alert('Section not found in this content pack. Try copying the full pack instead.');
+    return;
+  }
+  navigator.clipboard.writeText(sectionLines.join('\n').trim()).then(() => {
+    const btnMap = { 'FACEBOOK': 'fb-btn', 'GOOGLE ADS': 'ads-btn', 'CANVA': 'canva-btn' };
+    const prefix = Object.keys(btnMap).find(k => sectionKeyword.toUpperCase().includes(k));
+    const btnId = prefix ? `${btnMap[prefix]}-${i}` : null;
+    if (btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) { const orig = btn.textContent; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = orig, 2000); }
+    }
+  });
 }
 
 function filterContent(type, btn) {
