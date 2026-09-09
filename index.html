@@ -3,2066 +3,414 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SERVPRO Marketing Intelligence</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23FF4757'/><text x='6' y='22' font-size='16' font-weight='800' fill='white' font-family='Arial'>SP</text></svg>">
+<title>SERVPRO Call Intelligence</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
-/* ── DOPAMINE PALETTE on WHITE ─────────────────────────────────────────── */
 :root {
-  /* Core backgrounds */
-  --bg:        #FFFFFF;
-  --bg-off:    #F8F7FF;
-  --bg-card:   #FFFFFF;
-  --surface:   #F4F3FF;
-  --surface2:  #EEF0FF;
+  --electric:#6C3FFF; --electric-bg:#F0EBFF;
+  --pop:#FF4757; --pop-bg:#FFF0F2;
+  --lime:#00E5A0; --lime-bg:#E8FFF8;
+  --sun:#FFB300; --sun-bg:#FFF8E0;
+  --sky:#00C2FF; --sky-bg:#E0F8FF;
+  --magenta:#FF2D78; --magenta-bg:#FFF0F6;
+  --bg:#FFFFFF; --bg-off:#F8F7FF;
+  --border:#E8E6F0; --border2:#D4D0E8;
+  --text:#1A1025; --text-mid:#4A4360; --text-muted:#8A82A0; --text-dim:#C4BEDB;
+  --r:10px; --r-lg:16px;
+  --shadow:0 2px 12px rgba(108,63,255,0.08);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+.header{background:linear-gradient(135deg,var(--electric),var(--magenta));padding:28px 36px;color:white;}
+.header-chip{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:8px;}
+.header h1{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;margin-bottom:4px;}
+.header p{font-size:14px;opacity:.8;}
+
+.container{max-width:960px;margin:0 auto;padding:32px 24px;}
+
+.how-to{background:var(--electric-bg);border:1.5px solid rgba(108,63,255,0.2);border-radius:var(--r-lg);padding:20px 24px;margin-bottom:28px;}
+.how-to h2{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--electric);margin-bottom:12px;}
+.step-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.55;}
+.sn{width:22px;height:22px;border-radius:50%;background:var(--electric);color:white;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.code{font-family:'Space Mono',monospace;font-size:11px;background:white;border:1px solid rgba(108,63,255,0.2);padding:1px 7px;border-radius:5px;color:var(--electric);}
+
+.input-card{background:white;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:24px;margin-bottom:20px;box-shadow:var(--shadow);}
+.input-card h2{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.input-card p{font-size:13px;color:var(--text-muted);margin-bottom:16px;line-height:1.5;}
+
+.meta-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
+.meta-field label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);display:block;margin-bottom:5px;}
+.meta-field select, .meta-field input{width:100%;border:1.5px solid var(--border2);border-radius:8px;padding:9px 12px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);background:var(--bg-off);outline:none;transition:border-color .2s;}
+.meta-field select:focus, .meta-field input:focus{border-color:var(--electric);box-shadow:0 0 0 3px rgba(108,63,255,.1);}
+
+textarea{width:100%;border:1.5px solid var(--border2);border-radius:10px;padding:14px 16px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);background:var(--bg-off);outline:none;resize:vertical;line-height:1.6;transition:border-color .2s;}
+textarea:focus{border-color:var(--electric);box-shadow:0 0 0 3px rgba(108,63,255,.1);}
+textarea::placeholder{color:var(--text-dim);}
+
+.btn{border:none;border-radius:9px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:12px 24px;transition:all .15s;display:inline-flex;align-items:center;gap:8px;}
+.btn-electric{background:linear-gradient(135deg,var(--electric),var(--magenta));color:white;box-shadow:0 2px 14px rgba(108,63,255,.3);}
+.btn-electric:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(108,63,255,.4);}
+.btn-electric:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.btn-outline{background:white;color:var(--text-mid);border:1.5px solid var(--border2);}
+.btn-outline:hover{background:var(--bg-off);border-color:var(--electric);color:var(--electric);}
+
+.btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px;}
+
+.loading{display:none;align-items:center;gap:10px;font-size:13px;color:var(--text-muted);}
+.loading.show{display:flex;}
+.dots span{width:7px;height:7px;border-radius:50%;background:var(--electric);display:inline-block;animation:blink 1.2s infinite;}
+.dots span:nth-child(2){animation-delay:.2s;}
+.dots span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
+
+.results{display:none;}
+.results.show{display:block;}
+
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.results-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--text);}
+.results-meta{font-size:13px;color:var(--text-muted);}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px;}
+
+.panel{background:white;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;box-shadow:var(--shadow);}
+.panel-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:14px;}
+
+.tag-cloud{display:flex;flex-wrap:wrap;gap:7px;}
+.tag{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;}
+.tag-electric{background:var(--electric-bg);color:var(--electric);}
+.tag-pop{background:var(--pop-bg);color:var(--pop);}
+.tag-lime{background:var(--lime-bg);color:#00A370;}
+.tag-sun{background:var(--sun-bg);color:#CC8F00;}
+.tag-sky{background:var(--sky-bg);color:#007ACC;}
+
+.insight{padding:11px 14px;border-radius:9px;font-size:13px;line-height:1.55;color:var(--text-mid);border-left:3px solid;margin-bottom:8px;}
+.insight strong{color:var(--text);font-weight:700;}
+.insight.good{background:var(--lime-bg);border-color:var(--lime);}
+.insight.warn{background:var(--sun-bg);border-color:var(--sun);}
+.insight.danger{background:var(--pop-bg);border-color:var(--pop);}
+.insight.info{background:var(--sky-bg);border-color:var(--sky);}
+.insight.electric{background:var(--electric-bg);border-color:var(--electric);}
+
+.quote-card{background:var(--bg-off);border:1px solid var(--border);border-radius:9px;padding:12px 16px;margin-bottom:8px;font-size:13px;line-height:1.6;color:var(--text-mid);position:relative;}
+.quote-card::before{content:'"';font-size:32px;color:var(--electric);opacity:.3;position:absolute;top:4px;left:10px;font-family:Georgia,serif;line-height:1;}
+.quote-card .qt{padding-left:20px;color:var(--text);}
+.quote-card .qt-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-top:6px;}
+
+.copy-btn{background:var(--electric-bg);border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--electric);cursor:pointer;transition:all .15s;}
+.copy-btn:hover{background:var(--electric);color:white;}
+
+.history-section{margin-top:28px;}
+.history-section h2{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;}
+.history-item{background:white;border:1.5px solid var(--border);border-radius:var(--r);padding:14px 18px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .15s;}
+.history-item:hover{border-color:var(--electric);background:var(--electric-bg);}
+.hi-left .hi-label{font-size:13px;font-weight:600;color:var(--text);}
+.hi-left .hi-meta{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.hi-count{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--electric);background:var(--electric-bg);padding:3px 10px;border-radius:20px;}
 
-  /* Borders */
-  --border:    #E8E6F0;
-  --border2:   #D4D0E8;
+.empty-history{text-align:center;padding:28px;color:var(--text-muted);font-size:13px;background:var(--bg-off);border-radius:var(--r);border:1.5px dashed var(--border2);}
 
-  /* Text */
-  --text:      #1A1025;
-  --text-mid:  #4A4360;
-  --text-muted:#8A82A0;
-  --text-dim:  #C4BEDB;
+.results-content{font-size:14px;line-height:1.7;color:var(--text-mid);}
+.results-content h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--electric);margin:18px 0 8px;}
+.results-content ul{padding-left:18px;margin-bottom:12px;}
+.results-content li{margin-bottom:5px;}
+.results-content strong{color:var(--text);font-weight:700;}
 
-  /* Dopamine accent ramp */
-  --electric:  #6C3FFF;  /* electric violet — primary */
-  --electric-l:#8F6AFF;
-  --electric-bg:#F0EBFF;
+.raw-output{background:var(--bg-off);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-size:13px;line-height:1.7;color:var(--text-mid);white-space:pre-wrap;word-wrap:break-word;}
 
-  --pop:       #FF4757;  /* hot coral red */
-  --pop-l:     #FF7085;
-  --pop-bg:    #FFF0F2;
-
-  --lime:      #00E5A0;  /* neon mint */
-  --lime-l:    #33EDB5;
-  --lime-bg:   #E8FFF8;
-
-  --sun:       #FFB300;  /* vivid amber */
-  --sun-l:     #FFC940;
-  --sun-bg:    #FFF8E0;
-
-  --sky:       #00C2FF;  /* electric cyan */
-  --sky-l:     #33CFFF;
-  --sky-bg:    #E0F8FF;
-
-  --magenta:   #FF2D78;  /* hot pink */
-  --magenta-bg:#FFF0F6;
-
-  /* Radius */
-  --r:   10px;
-  --r-lg:16px;
-  --r-xl:24px;
-
-  /* Shadows */
-  --shadow:    0 2px 12px rgba(108,63,255,0.08);
-  --shadow-lg: 0 8px 32px rgba(108,63,255,0.12);
-}
-
-/* ── RESET ──────────────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body { height: 100%; overflow: hidden; }
-
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-/* ── PASSWORD GATE ──────────────────────────────────────────────────────── */
-#gate {
-  position: fixed; inset: 0; z-index: 9999;
-  background: var(--bg);
-  display: flex; align-items: center; justify-content: center;
-}
-
-.gate-card {
-  width: 420px;
-  background: var(--bg-card);
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-xl);
-  padding: 48px 40px;
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-}
-
-.gate-logo {
-  width: 56px; height: 56px; border-radius: 16px;
-  background: linear-gradient(135deg, var(--electric), var(--magenta));
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: 20px; font-weight: 800; color: white;
-  margin-bottom: 20px;
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-.gate-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 22px; font-weight: 700;
-  color: var(--text); margin-bottom: 6px;
-}
-
-.gate-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
-
-.gate-input {
-  width: 100%;
-  border: 1.5px solid var(--border2);
-  border-radius: var(--r);
-  padding: 12px 16px;
-  font-family: 'Space Mono', monospace;
-  font-size: 15px; letter-spacing: 0.12em;
-  text-align: center;
-  color: var(--text);
-  background: var(--bg-off);
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  margin-bottom: 12px;
-}
-
-.gate-input:focus {
-  border-color: var(--electric);
-  box-shadow: 0 0 0 3px rgba(108,63,255,0.12);
-}
-
-.gate-btn {
-  width: 100%;
-  background: linear-gradient(135deg, var(--electric), var(--magenta));
-  color: white; border: none; border-radius: var(--r);
-  padding: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px; font-weight: 700;
-  cursor: pointer; letter-spacing: 0.02em;
-  transition: opacity 0.2s, transform 0.1s;
-}
-
-.gate-btn:hover { opacity: 0.9; }
-.gate-btn:active { transform: scale(0.99); }
-
-.gate-error {
-  font-size: 12px; color: var(--pop);
-  margin-top: 10px; display: none;
-  font-weight: 600;
-}
-
-/* ── LAYOUT ─────────────────────────────────────────────────────────────── */
-#app { display: none; height: 100vh; flex-direction: row; }
-#app.visible { display: flex; }
-
-/* ── SIDEBAR ─────────────────────────────────────────────────────────────── */
-.sidebar {
-  width: 232px; flex-shrink: 0;
-  background: var(--bg);
-  border-right: 1.5px solid var(--border);
-  display: flex; flex-direction: column;
-  overflow: hidden;
-}
-
-.logo-area {
-  padding: 20px 18px 16px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 10px;
-}
-
-.logo-chip {
-  width: 34px; height: 34px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--electric), var(--magenta));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 800; color: white;
-  flex-shrink: 0; font-family: 'Space Grotesk', sans-serif;
-}
-
-.logo-words .l1 { font-size: 13px; font-weight: 700; color: var(--text); font-family: 'Space Grotesk', sans-serif; }
-.logo-words .l2 { font-size: 10px; color: var(--text-muted); letter-spacing: 0.07em; text-transform: uppercase; }
-
-.nav { padding: 10px 8px; flex: 1; overflow-y: auto; }
-
-.nav-group-label {
-  font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text-dim);
-  padding: 10px 10px 4px;
-}
-
-.nav-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px 10px; border-radius: 8px;
-  cursor: pointer; transition: all 0.15s;
-  font-size: 13px; font-weight: 500; color: var(--text-mid);
-  margin-bottom: 1px; user-select: none;
-}
-
-.nav-item:hover { background: var(--surface); color: var(--text); }
-
-.nav-item.active {
-  background: var(--electric-bg);
-  color: var(--electric);
-  font-weight: 600;
-}
-
-.nav-item .ni {
-  width: 28px; height: 28px; border-radius: 7px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; flex-shrink: 0;
-  background: transparent;
-  transition: background 0.15s;
-}
-
-.nav-item.active .ni { background: rgba(108,63,255,0.12); }
-.nav-item:hover .ni { background: var(--surface2); }
-
-.sidebar-foot {
-  padding: 12px 8px 14px;
-  border-top: 1px solid var(--border);
-}
-
-.data-widget {
-  background: var(--bg-off);
-  border: 1px solid var(--border);
-  border-radius: var(--r); padding: 10px 12px;
-}
-
-.dw-label { font-size: 10px; font-weight: 700; color: var(--text-mid); margin-bottom: 7px; letter-spacing: 0.04em; text-transform: uppercase; }
-
-.dw-row {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 11px; color: var(--text-muted); margin-bottom: 3px;
-}
-
-.dw-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.dw-dot.live { background: var(--lime); box-shadow: 0 0 6px var(--lime); }
-.dw-dot.pending { background: var(--sun); }
-.dw-dot.off { background: var(--border2); }
-
-/* ── TOPBAR ───────────────────────────────────────────────────────────────── */
-.topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 32px;
-  height: 58px; flex-shrink: 0;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
-  position: sticky; top: 0; z-index: 100;
-}
-
-.topbar-meta { font-size: 12.5px; color: var(--text-muted); }
-.topbar-meta strong { color: var(--text); font-weight: 600; }
-
-.topbar-actions { display: flex; gap: 8px; align-items: center; }
-
-/* ── BUTTONS ─────────────────────────────────────────────────────────────── */
-.btn {
-  border: none; border-radius: 8px; cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px; font-weight: 600;
-  padding: 8px 16px; transition: all 0.15s;
-  display: inline-flex; align-items: center; gap: 6px;
-}
-
-.btn-electric {
-  background: linear-gradient(135deg, var(--electric), var(--magenta));
-  color: white;
-  box-shadow: 0 2px 12px rgba(108,63,255,0.25);
-}
-.btn-electric:hover { box-shadow: 0 4px 20px rgba(108,63,255,0.35); transform: translateY(-1px); }
-
-.btn-outline {
-  background: var(--bg);
-  color: var(--text-mid);
-  border: 1.5px solid var(--border2);
-}
-.btn-outline:hover { background: var(--surface); color: var(--text); border-color: var(--electric); }
-
-.btn-surface {
-  background: var(--surface);
-  color: var(--text-mid);
-  border: 1px solid var(--border);
-}
-.btn-surface:hover { background: var(--surface2); color: var(--text); }
-
-/* ── MAIN CONTENT ─────────────────────────────────────────────────────────── */
-.main {
-  flex: 1; display: flex; flex-direction: column;
-  overflow: hidden; background: var(--bg-off);
-}
-
-.main-scroll {
-  flex: 1; overflow-y: auto;
-  padding: 28px 32px;
-}
-
-/* ── SCREENS ─────────────────────────────────────────────────────────────── */
-.screen { display: none; max-width: 1060px; }
-.screen.active { display: block; animation: fadeUp 0.3s ease; }
-
-@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-/* ── PAGE HEADER ─────────────────────────────────────────────────────────── */
-.ph { margin-bottom: 24px; }
-.ph-eye {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--electric);
-  margin-bottom: 5px;
-}
-.ph-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 26px; font-weight: 700; color: var(--text);
-  line-height: 1.15; margin-bottom: 4px;
-}
-.ph-sub { font-size: 13px; color: var(--text-muted); }
-
-/* ── METRIC CARDS ─────────────────────────────────────────────────────────── */
-.metric-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; margin-bottom: 22px; }
-
-.mc {
-  background: var(--bg-card);
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-lg); padding: 16px;
-  transition: box-shadow 0.2s, border-color 0.2s;
-}
-.mc:hover { box-shadow: var(--shadow); }
-
-.mc.electric { border-color: rgba(108,63,255,0.3); background: var(--electric-bg); }
-.mc.pop      { border-color: rgba(255,71,87,0.25); background: var(--pop-bg); }
-.mc.lime     { border-color: rgba(0,229,160,0.25); background: var(--lime-bg); }
-.mc.sun      { border-color: rgba(255,179,0,0.25); background: var(--sun-bg); }
-.mc.sky      { border-color: rgba(0,194,255,0.25); background: var(--sky-bg); }
-
-.mc-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.02em; }
-.mc-val { font-size: 22px; font-weight: 800; line-height: 1; font-family: 'Space Grotesk', sans-serif; color: var(--text); margin-bottom: 5px; }
-.mc.electric .mc-val { color: var(--electric); }
-.mc.pop .mc-val      { color: var(--pop); }
-.mc.lime .mc-val     { color: #00C27A; }
-.mc.sun .mc-val      { color: #CC8F00; }
-.mc.sky .mc-val      { color: #0099CC; }
-.mc-sub { font-size: 11px; color: var(--text-muted); }
-
-/* ── PANELS ───────────────────────────────────────────────────────────────── */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 18px; }
-
-.panel {
-  background: var(--bg-card);
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-lg); padding: 20px;
-  box-shadow: var(--shadow);
-}
-
-.panel-title {
-  font-size: 13px; font-weight: 700;
-  color: var(--text); margin-bottom: 16px;
-  font-family: 'Space Grotesk', sans-serif;
-  display: flex; align-items: center; gap: 7px;
-}
-
-.panel-badge {
-  font-size: 10px; font-weight: 700; padding: 2px 8px;
-  border-radius: 20px; letter-spacing: 0.04em;
-}
-
-/* ── TAGS ────────────────────────────────────────────────────────────────── */
-.tag { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-.tag-lime    { background: var(--lime-bg);     color: #00A370; }
-.tag-pop     { background: var(--pop-bg);      color: var(--pop); }
-.tag-sun     { background: var(--sun-bg);      color: #B37D00; }
-.tag-sky     { background: var(--sky-bg);      color: #007ACC; }
-.tag-electric{ background: var(--electric-bg); color: var(--electric); }
-
-/* ── BAR CHART ────────────────────────────────────────────────────────────── */
-.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.bar-label { font-size: 12px; color: var(--text-muted); width: 108px; text-align: right; flex-shrink: 0; font-weight: 500; }
-.bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 4px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
-.bar-val { font-size: 11px; font-weight: 700; width: 56px; color: var(--text-mid); font-family: 'Space Mono', monospace; }
-
-/* ── FUNNEL ───────────────────────────────────────────────────────────────── */
-.funnel { display: flex; flex-direction: column; gap: 5px; }
-.f-row {
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--bg-off); border-radius: 9px; padding: 10px 14px;
-  border: 1px solid var(--border);
-}
-.f-row.accent {
-  background: var(--electric-bg); border-color: rgba(108,63,255,0.2);
-}
-.f-row .fl { font-size: 13px; color: var(--text-muted); font-weight: 500; }
-.f-row.accent .fl { color: var(--electric); font-weight: 600; }
-.f-row .fv { font-size: 16px; font-weight: 800; color: var(--text); font-family: 'Space Grotesk', sans-serif; }
-.f-row.accent .fv { color: var(--electric); }
-.f-pct { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-left: 6px; }
-.f-arrow { text-align: center; font-size: 11px; color: var(--text-dim); padding: 1px 0; }
-
-/* ── INSIGHT CARDS ────────────────────────────────────────────────────────── */
-.insight-list { display: flex; flex-direction: column; gap: 8px; }
-.insight {
-  padding: 11px 14px; border-radius: 9px;
-  font-size: 13px; line-height: 1.55; color: var(--text-mid);
-  border-left: 3px solid;
-}
-.insight strong { color: var(--text); font-weight: 700; }
-.insight.good   { background: var(--lime-bg);     border-color: var(--lime); }
-.insight.warn   { background: var(--sun-bg);      border-color: var(--sun); }
-.insight.danger { background: var(--pop-bg);      border-color: var(--pop); }
-.insight.info   { background: var(--sky-bg);      border-color: var(--sky); }
-.insight.electric{background: var(--electric-bg); border-color: var(--electric); }
-
-/* ── FRANCHISE TABLE ──────────────────────────────────────────────────────── */
-.fr-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.fr-table th {
-  text-align: left; padding: 7px 10px;
-  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--text-muted); border-bottom: 2px solid var(--border);
-}
-.fr-table td { padding: 10px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-.fr-table tr:last-child td { border-bottom: none; }
-.fr-table tr:hover td { background: var(--bg-off); }
-.fr-name { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text); }
-.fr-swatch { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-
-/* ── FRANCHISE REPORT CARDS ───────────────────────────────────────────────── */
-.rfc {
-  background: var(--bg-card); border: 1.5px solid var(--border);
-  border-radius: var(--r-lg); margin-bottom: 14px; overflow: hidden;
-  transition: box-shadow 0.2s;
-}
-.rfc:hover { box-shadow: var(--shadow); }
-
-.rfc-hdr {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px; cursor: pointer;
-}
-
-.rfc-hdr-left { display: flex; align-items: center; gap: 12px; }
-.rfc-stripe { width: 4px; height: 40px; border-radius: 2px; flex-shrink: 0; }
-.rfc-name { font-size: 15px; font-weight: 700; color: var(--text); font-family: 'Space Grotesk', sans-serif; }
-.rfc-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-.rfc-score { font-size: 24px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
-.rfc-chev { color: var(--text-dim); transition: transform 0.2s; font-size: 12px; }
-.rfc.open .rfc-chev { transform: rotate(180deg); }
-
-.rfc-body { display: none; padding: 0 20px 20px; border-top: 1px solid var(--border); padding-top: 18px; }
-.rfc.open .rfc-body { display: block; }
-
-.rfc-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 16px; }
-.rfc-metric-cell {
-  background: var(--bg-off); border: 1px solid var(--border);
-  border-radius: 9px; padding: 10px 12px;
-}
-.rfc-metric-cell .rm-label { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
-.rfc-metric-cell .rm-val { font-size: 17px; font-weight: 800; color: var(--text); font-family: 'Space Grotesk', sans-serif; }
-
-.action-list { display: flex; flex-direction: column; gap: 6px; }
-.action-item {
-  display: flex; gap: 11px; align-items: flex-start;
-  background: var(--bg-off); border-radius: 9px; padding: 10px 14px;
-  font-size: 13px; color: var(--text-mid); line-height: 1.5; border: 1px solid var(--border);
-}
-.action-num {
-  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--electric), var(--magenta));
-  color: white; font-size: 10px; font-weight: 800;
-  display: flex; align-items: center; justify-content: center;
-  margin-top: 1px;
-}
-
-/* ── SOURCE IMPORT CARDS ──────────────────────────────────────────────────── */
-.src-card {
-  background: var(--bg-card); border: 1.5px solid var(--border);
-  border-radius: var(--r-lg); margin-bottom: 12px; overflow: hidden;
-}
-.src-card-hdr {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 18px; cursor: pointer; transition: background 0.15s;
-}
-.src-card-hdr:hover { background: var(--bg-off); }
-.src-card-left { display: flex; align-items: center; gap: 11px; }
-.src-badge {
-  font-size: 10px; font-weight: 700; padding: 3px 9px;
-  border-radius: 20px; letter-spacing: 0.04em; text-transform: uppercase;
-  flex-shrink: 0;
-}
-.src-badge.req     { background: var(--pop-bg);      color: var(--pop); }
-.src-badge.rec     { background: var(--lime-bg);      color: #00A370; }
-.src-badge.nice    { background: var(--sun-bg);       color: #B37D00; }
-.src-card-name { font-size: 14px; font-weight: 700; color: var(--text); }
-.src-card-meta { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
-.src-card-body {
-  display: none; padding: 0 18px 18px;
-  border-top: 1px solid var(--border); padding-top: 15px;
-}
-.src-card.open .src-card-body { display: block; }
-.src-card-chev { color: var(--text-dim); font-size: 12px; transition: transform 0.2s; }
-.src-card.open .src-card-chev { transform: rotate(180deg); }
-
-.step-list { list-style: none; }
-.step-list li {
-  display: flex; gap: 11px; margin-bottom: 11px;
-  font-size: 13px; line-height: 1.55; color: var(--text-mid);
-}
-.step-n {
-  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
-  background: var(--electric-bg); border: 1.5px solid rgba(108,63,255,0.2);
-  font-size: 10px; font-weight: 800; color: var(--electric);
-  display: flex; align-items: center; justify-content: center;
-  margin-top: 1px; font-family: 'Space Mono', monospace;
-}
-.code-path {
-  font-family: 'Space Mono', monospace; font-size: 11px;
-  background: var(--surface2); padding: 1px 7px; border-radius: 5px;
-  color: var(--electric);
-}
-
-.tip-box {
-  background: var(--sky-bg); border: 1px solid rgba(0,194,255,0.2);
-  border-radius: 9px; padding: 11px 14px; margin-top: 11px;
-  font-size: 12px; color: var(--text-mid); line-height: 1.6;
-}
-.tip-box strong { color: #007ACC; }
-
-.rec-box {
-  background: var(--electric-bg); border: 1px solid rgba(108,63,255,0.2);
-  border-radius: 9px; padding: 11px 14px; margin-top: 8px;
-  font-size: 12px; color: var(--text-mid); line-height: 1.6;
-}
-.rec-box strong { color: var(--electric); }
-
-.upload-zone {
-  border: 2px dashed var(--border2); border-radius: 10px;
-  padding: 18px; text-align: center; margin-top: 13px;
-  cursor: pointer; transition: all 0.2s;
-}
-.upload-zone:hover { border-color: var(--electric); background: var(--electric-bg); }
-.upload-zone input { display: none; }
-.uz-icon { font-size: 22px; margin-bottom: 6px; }
-.uz-label { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
-.uz-sub { font-size: 11px; color: var(--text-muted); }
-
-.file-loaded {
-  display: flex; align-items: center; gap: 9px;
-  background: var(--lime-bg); border: 1px solid rgba(0,229,160,0.25);
-  border-radius: 9px; padding: 10px 14px; margin-top: 9px;
-  font-size: 13px; font-weight: 600; color: #00A370;
-}
-
-/* ── MISSING DATA BANNER ──────────────────────────────────────────────────── */
-.missing-banner {
-  background: var(--sun-bg); border: 1.5px solid rgba(255,179,0,0.3);
-  border-radius: var(--r-lg); padding: 14px 18px; margin-bottom: 22px;
-  display: flex; align-items: center; gap: 14px;
-  font-size: 13px; color: var(--text-mid);
-}
-.missing-banner strong { color: #CC8F00; font-weight: 700; }
-.missing-banner a { color: var(--electric); text-decoration: underline; cursor: pointer; font-weight: 600; }
-
-/* ── MODAL ────────────────────────────────────────────────────────────────── */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(26,16,37,0.55);
-  backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 500;
-}
-.modal {
-  background: var(--bg-card); border: 1.5px solid var(--border);
-  border-radius: var(--r-xl); width: 700px; max-width: 94vw;
-  max-height: 88vh; overflow-y: auto; padding: 36px;
-  position: relative; box-shadow: var(--shadow-lg);
-}
-.modal-close {
-  position: absolute; top: 16px; right: 16px;
-  background: var(--surface); border: 1px solid var(--border);
-  color: var(--text-muted); cursor: pointer;
-  width: 30px; height: 30px; border-radius: 7px; font-size: 15px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
-}
-.modal-close:hover { background: var(--pop-bg); color: var(--pop); }
-.modal-eyebrow {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--electric); margin-bottom: 8px;
-}
-.modal h2 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 8px;
-}
-.modal-sub { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
-
-.choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-.choice-card {
-  background: var(--bg-off); border: 1.5px solid var(--border);
-  border-radius: var(--r-lg); padding: 20px; cursor: pointer;
-  transition: all 0.2s;
-}
-.choice-card:hover { border-color: var(--electric); background: var(--electric-bg); box-shadow: var(--shadow); }
-.choice-icon { font-size: 26px; margin-bottom: 9px; }
-.choice-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; font-family: 'Space Grotesk', sans-serif; }
-.choice-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
-
-/* ── WIZARD PROGRESS ──────────────────────────────────────────────────────── */
-.wiz-progress { display: flex; gap: 5px; align-items: center; margin-bottom: 22px; }
-.wiz-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); transition: all 0.3s; }
-.wiz-dot.done { background: var(--lime); }
-.wiz-dot.active { background: var(--electric); width: 22px; border-radius: 4px; }
-.wiz-label { font-size: 11px; color: var(--text-muted); margin-left: 8px; font-weight: 500; }
-
-/* ── AI PANEL ─────────────────────────────────────────────────────────────── */
-.ai-panel {
-  position: fixed; right: 0; top: 0; bottom: 0; width: 400px;
-  background: var(--bg-card); border-left: 1.5px solid var(--border);
-  display: flex; flex-direction: column;
-  transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-  z-index: 200; box-shadow: -4px 0 24px rgba(108,63,255,0.08);
-}
-.ai-panel.open { transform: translateX(0); }
-
-.ai-header {
-  padding: 16px 18px; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.ai-title-row { display: flex; align-items: center; gap: 10px; }
-.ai-live-dot {
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--lime); box-shadow: 0 0 8px var(--lime);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.ai-title { font-size: 14px; font-weight: 700; color: var(--text); font-family: 'Space Grotesk', sans-serif; }
-.ai-sub-label { font-size: 11px; color: var(--text-muted); }
-.ai-close { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 5px; transition: all 0.15s; }
-.ai-close:hover { background: var(--pop-bg); color: var(--pop); }
-
-.ai-msgs { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 9px; }
-
-.ai-msg {
-  max-width: 88%; font-size: 13px; line-height: 1.6;
-  padding: 10px 14px; border-radius: 12px;
-}
-.ai-msg.assistant {
-  background: var(--bg-off); color: var(--text-mid);
-  border: 1px solid var(--border); align-self: flex-start;
-  border-radius: 4px 12px 12px 12px;
-}
-.ai-msg.user {
-  background: linear-gradient(135deg, var(--electric), var(--magenta));
-  color: white; align-self: flex-end;
-  border-radius: 12px 4px 12px 12px;
-}
-
-.ai-input-row {
-  padding: 12px 14px; border-top: 1px solid var(--border);
-  display: flex; gap: 8px;
-}
-.ai-textarea {
-  flex: 1; background: var(--bg-off); border: 1.5px solid var(--border);
-  border-radius: 9px; padding: 10px 13px; color: var(--text);
-  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
-  outline: none; resize: none; height: 42px;
-  transition: border-color 0.2s;
-}
-.ai-textarea:focus { border-color: var(--electric); box-shadow: 0 0 0 3px rgba(108,63,255,0.1); }
-.ai-send {
-  width: 42px; height: 42px; border-radius: 9px; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--electric), var(--magenta));
-  border: none; cursor: pointer; color: white; font-size: 17px;
-  display: flex; align-items: center; justify-content: center;
-  transition: opacity 0.15s; box-shadow: 0 2px 10px rgba(108,63,255,0.3);
-}
-.ai-send:hover { opacity: 0.88; }
-
-.ai-fab {
-  position: fixed; bottom: 26px; right: 26px;
-  width: 54px; height: 54px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--electric), var(--magenta));
-  border: none; cursor: pointer; color: white; font-size: 22px;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 24px rgba(108,63,255,0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-  z-index: 199;
-}
-.ai-fab:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(108,63,255,0.5); }
-
-.thinking { display: flex; gap: 4px; padding: 2px 0; }
-.thinking span { width: 6px; height: 6px; border-radius: 50%; background: var(--electric); opacity: 0.4; animation: blink 1.2s infinite; }
-.thinking span:nth-child(2) { animation-delay: 0.2s; }
-.thinking span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes blink { 0%,60%,100%{opacity:0.3} 30%{opacity:1} }
-
-/* ── SCROLLBAR ────────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
-
-/* ── QUICK ACTIONS STRIP ─────────────────────────────────────────────────── */
-.qa-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-.qa-btn {
-  padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
-  cursor: pointer; border: 1.5px solid var(--border2); background: var(--bg);
-  color: var(--text-mid); transition: all 0.15s;
-}
-.qa-btn:hover { border-color: var(--electric); color: var(--electric); background: var(--electric-bg); }
-
-/* SCORE CIRCLE */
-.score-ring { position: relative; display: inline-block; }
-.score-num { font-size: 22px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
-
-/* ── GOOGLE SHEETS SYNC ───────────────────────────────────────────────────── */
-.sync-bar {
-  display:flex; align-items:center; gap:8px;
-  padding:8px 14px; border-radius:8px; font-size:12px; font-weight:600;
-  transition:all 0.3s; margin-bottom:0;
-}
-.sync-bar.idle    { background:var(--bg-off); color:var(--text-muted); border:1px solid var(--border); }
-.sync-bar.saving  { background:var(--sun-bg);  color:#CC8F00; border:1px solid rgba(255,179,0,0.3); }
-.sync-bar.saved   { background:var(--lime-bg); color:#00A370; border:1px solid rgba(0,229,160,0.3); }
-.sync-bar.error   { background:var(--pop-bg);  color:var(--pop); border:1px solid rgba(255,71,87,0.3); }
-.sync-bar.loading { background:var(--electric-bg); color:var(--electric); border:1px solid rgba(108,63,255,0.25); }
-
-.sync-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-.sync-dot.pulse { animation:pulse 1.5s infinite; }
-
-.toast {
-  position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
-  background:var(--text); color:white; padding:10px 20px;
-  border-radius:20px; font-size:13px; font-weight:600;
-  z-index:9999; opacity:0; transition:opacity 0.3s;
-  pointer-events:none; white-space:nowrap;
-}
-.toast.show { opacity:1; }
-
-.db-panel {
-  background:var(--bg-card); border:1.5px solid var(--border);
-  border-radius:var(--r-lg); padding:20px; margin-bottom:18px;
-}
-.db-panel h3 {
-  font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700;
-  color:var(--text); margin-bottom:4px;
-}
-.db-panel p { font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:14px; }
-
-.sheets-url-input {
-  width:100%; border:1.5px solid var(--border2); border-radius:9px;
-  padding:10px 14px; font-size:13px; color:var(--text);
-  background:var(--bg-off); outline:none;
-  font-family:'Space Mono',monospace;
-  transition:border-color 0.2s;
-}
-.sheets-url-input:focus { border-color:var(--electric); box-shadow:0 0 0 3px rgba(108,63,255,0.1); }
-.sheets-url-input::placeholder { color:var(--text-dim); font-family:'Plus Jakarta Sans',sans-serif; }
-
-.data-table {
-  width:100%; border-collapse:collapse; font-size:12px; margin-top:12px;
-}
-.data-table th {
-  text-align:left; padding:6px 10px; font-size:10px; font-weight:700;
-  letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted);
-  border-bottom:2px solid var(--border);
-}
-.data-table td {
-  padding:9px 10px; border-bottom:1px solid var(--border);
-  color:var(--text-mid); vertical-align:middle;
-}
-.data-table tr:last-child td { border-bottom:none; }
-.data-table tr:hover td { background:var(--bg-off); }
-
-.period-tag {
-  display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700;
-  background:var(--electric-bg); color:var(--electric);
-}
-
+.char-count{font-size:11px;color:var(--text-dim);text-align:right;margin-top:4px;}
+.char-count.warn{color:var(--sun);}
+.char-count.good{color:#00A370;}
 </style>
 </head>
 <body>
 
-<!-- ── PASSWORD GATE ──────────────────────────────────────────────────── -->
-<div id="gate">
-  <div class="gate-card">
-    <div class="gate-logo">SP</div>
-    <div class="gate-title">SERVPRO Intelligence</div>
-    <p class="gate-sub">Enter your access password to continue</p>
-    <input class="gate-input" type="password" id="pwInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPw()">
-    <button class="gate-btn" onclick="checkPw()">Unlock Dashboard →</button>
-    <div class="gate-error" id="pwError">Incorrect password. Please try again.</div>
-  </div>
+<div class="header">
+  <div class="header-chip">SERVPRO Marketing Intelligence</div>
+  <h1>Call Intelligence Analyzer</h1>
+  <p>Paste Invoca transcripts → get marketing insights, customer language, and content ideas</p>
 </div>
 
-<!-- ── APP ────────────────────────────────────────────────────────────── -->
-<div id="app">
+<div class="container">
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="logo-area">
-      <div class="logo-chip">SP</div>
-      <div class="logo-words">
-        <div class="l1">SERVPRO Intel</div>
-        <div class="l2">Marketing Platform</div>
+  <!-- HOW TO -->
+  <div class="how-to">
+    <h2>How to get transcripts from Invoca</h2>
+    <div class="step-row"><div class="sn">1</div><span>Log into Invoca → click <strong>Conversation Review</strong> in the left nav.</span></div>
+    <div class="step-row"><div class="sn">2</div><span>Filter by franchise using the <strong>Campaign</strong> or <strong>Tracking Number</strong> filter. Set your date range.</span></div>
+    <div class="step-row"><div class="sn">3</div><span>Click on any call → scroll down to see the full transcript. Select all the text, copy it.</span></div>
+    <div class="step-row"><div class="sn">4</div><span>Paste it below. You can paste <strong>multiple transcripts at once</strong> — just separate them with a blank line or "---". Aim for 5–20 calls per analysis for best results.</span></div>
+    <div class="step-row"><div class="sn">5</div><span>Hit <strong>Analyze calls</strong> and Claude will extract customer language, objections, job types, and ad copy ideas.</span></div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-card">
+    <h2>Paste your transcripts</h2>
+    <p>Copy transcript text from Invoca's Conversation Review and paste below. Multiple calls can be pasted together.</p>
+
+    <div class="meta-row">
+      <div class="meta-field">
+        <label>Franchise</label>
+        <select id="franchise">
+          <option value="all">All franchises</option>
+          <option value="ebensburg">Ebensburg</option>
+          <option value="altoona">Altoona</option>
+          <option value="happy-valley">Happy Valley</option>
+          <option value="s-blair">S. Blair / Bedford</option>
+          <option value="indiana">Indiana County</option>
+        </select>
+      </div>
+      <div class="meta-field">
+        <label>Time period</label>
+        <input type="text" id="period" placeholder="e.g. May 2026">
+      </div>
+      <div class="meta-field">
+        <label>Focus area (optional)</label>
+        <select id="focus">
+          <option value="general">General analysis</option>
+          <option value="water">Water damage calls</option>
+          <option value="mold">Mold calls</option>
+          <option value="fire">Fire damage calls</option>
+          <option value="commercial">Commercial leads</option>
+          <option value="notsold">Not-sold / cancelled calls</option>
+          <option value="adcopy">Ad copy & content ideas</option>
+        </select>
       </div>
     </div>
 
-    <nav class="nav">
-      <div class="nav-group-label">Analytics</div>
-      <div class="nav-item active" onclick="showScreen('dashboard',this)">
-        <div class="ni">◈</div> Dashboard
-      </div>
-      <div class="nav-item" onclick="showScreen('franchises',this)">
-        <div class="ni">⬡</div> Franchises
-      </div>
-      <div class="nav-item" onclick="showScreen('pipeline',this)">
-        <div class="ni">⤳</div> Call Pipeline
-      </div>
-      <div class="nav-item" onclick="showScreen('jobs',this)">
-        <div class="ni">◻</div> Job Analysis
-      </div>
+    <textarea id="transcriptInput" rows="12"
+      placeholder="Paste your Invoca transcript(s) here...
 
-      <div class="nav-group-label">Output</div>
-      <div class="nav-item" onclick="showScreen('report',this)">
-        <div class="ni">▤</div> Owner Report
-      </div>
-      <div class="nav-item" onclick="showScreen('strategy',this)">
-        <div class="ni">◈</div> Strategy Brief
-      </div>
+Example:
+Agent: SERVPRO, how can I help you?
+Caller: Hi, I came home and found water all over my basement floor...
+Agent: Oh no, when did this happen?
+Caller: Just about an hour ago, I'm not sure what to do...
 
-      <div class="nav-group-label">Data</div>
-      <div class="nav-item" onclick="showImportModal()">
-        <div class="ni">⬆</div> Import Data
-      </div>
-      <div class="nav-item" onclick="showScreen('settings',this)">
-        <div class="ni">⚙</div> Sheets Setup
-      </div>
-    </nav>
+--- (paste multiple calls separated by --- or a blank line) ---
 
-    <div class="sidebar-foot">
-      <div class="data-widget">
-        <div class="dw-label">Data Sources</div>
-        <div class="dw-row"><span class="dw-dot live"></span> GBP — Jan–Apr 2026</div>
-        <div class="dw-row"><span class="dw-dot live"></span> LSA Leads — 85</div>
-        <div class="dw-row"><span class="dw-dot live"></span> WC Calls — 5 franchises</div>
-        <div class="dw-row"><span class="dw-dot live"></span> WC Jobs — 707</div>
-        <div class="dw-row"><span class="dw-dot pending"></span> GA4 — not connected</div>
-        <div class="dw-row"><span class="dw-dot off"></span> Google Ads — not loaded</div>
-        <div class="dw-row"><span class="dw-dot off"></span> Social — not loaded</div>
+Agent: Thank you for calling SERVPRO..."></textarea>
+    <div class="char-count" id="charCount">0 characters</div>
+
+    <div class="btn-row">
+      <button class="btn btn-electric" id="analyzeBtn" onclick="analyzeTranscripts()">✦ Analyze calls</button>
+      <button class="btn btn-outline" onclick="clearInput()">Clear</button>
+      <div class="loading" id="loadingIndicator">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span>Claude is analyzing your calls…</span>
       </div>
     </div>
   </div>
 
-  <!-- MAIN -->
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-meta"><strong>Jan 1 – Apr 26, 2026</strong> &nbsp;·&nbsp; 5 franchises &nbsp;·&nbsp; Central PA</div>
-      <div class="topbar-actions">
-        <div class="sync-bar idle" id="syncBar">
-          <div class="sync-dot" id="syncDot" style="background:var(--text-dim);"></div>
-          <span id="syncLabel">Not connected to Sheets</span>
-        </div>
-        <button class="btn btn-surface" onclick="showImportModal()">⬆ Import Data</button>
-        <button class="btn btn-electric" onclick="toggleAI()">✦ Ask AI</button>
-      </div>
-    </div>
-
-    <div class="main-scroll">
-
-      <!-- DASHBOARD -->
-      <div class="screen active" id="screen-dashboard">
-        <div class="ph">
-          <div class="ph-eye">Network Overview</div>
-          <div class="ph-title">Performance Dashboard</div>
-          <div class="ph-sub">Jan 1 – Apr 26, 2026 · All 5 SERVPRO franchises</div>
-        </div>
-
-        <div class="missing-banner">
-          <span style="font-size:20px;">⚡</span>
-          <span><strong>3 data sources not connected:</strong> GA4, Google Ads spend, and Social insights. These unlock ROI analysis and content performance. <a onclick="showImportModal()">Import now →</a></span>
-        </div>
-
-        <div class="metric-grid">
-          <div class="mc electric">
-            <div class="mc-label">Network Revenue</div>
-            <div class="mc-val">$163k</div>
-            <div class="mc-sub">Call data YTD</div>
-          </div>
-          <div class="mc lime">
-            <div class="mc-label">WC Jobs</div>
-            <div class="mc-val">707</div>
-            <div class="mc-sub">36.5% close rate</div>
-          </div>
-          <div class="mc sky">
-            <div class="mc-label">GBP Views</div>
-            <div class="mc-val">9,629</div>
-            <div class="mc-sub">All 5 profiles</div>
-          </div>
-          <div class="mc electric">
-            <div class="mc-label">LSA Leads</div>
-            <div class="mc-val">85</div>
-            <div class="mc-sub">87% charged</div>
-          </div>
-          <div class="mc sky">
-            <div class="mc-label">Web Clicks (GBP)</div>
-            <div class="mc-val">417</div>
-            <div class="mc-sub">Profile → website</div>
-          </div>
-          <div class="mc sun">
-            <div class="mc-label">Not Sold</div>
-            <div class="mc-val">248</div>
-            <div class="mc-sub">35.1% of jobs</div>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Revenue by franchise</div>
-            <div class="bar-row"><div class="bar-label">Ebensburg</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#6C3FFF,#FF2D78);"></div></div><div class="bar-val">$79,388</div></div>
-            <div class="bar-row"><div class="bar-label">Altoona</div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#00C2FF;"></div></div><div class="bar-val">$31,931</div></div>
-            <div class="bar-row"><div class="bar-label">Happy Valley</div><div class="bar-track"><div class="bar-fill" style="width:39%;background:#00E5A0;"></div></div><div class="bar-val">$30,738</div></div>
-            <div class="bar-row"><div class="bar-label">Indiana Co.</div><div class="bar-track"><div class="bar-fill" style="width:14%;background:#FFB300;"></div></div><div class="bar-val">$11,231</div></div>
-            <div class="bar-row"><div class="bar-label">S. Blair/Bed</div><div class="bar-track"><div class="bar-fill" style="width:13%;background:#FF4757;"></div></div><div class="bar-val">$10,147</div></div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-title">Call conversion funnel — network</div>
-            <div class="funnel">
-              <div class="f-row accent"><div class="fl">Total calls received</div><div class="fv">436 <span class="f-pct">100%</span></div></div>
-              <div class="f-arrow">↓ connected</div>
-              <div class="f-row"><div class="fl">Connected calls</div><div class="fv">381 <span class="f-pct">87.4%</span></div></div>
-              <div class="f-arrow">↓ 40.2% → lead</div>
-              <div class="f-row"><div class="fl">Leads created</div><div class="fv">153 <span class="f-pct">40.2%</span></div></div>
-              <div class="f-arrow">↓ 19% → job</div>
-              <div class="f-row"><div class="fl">Jobs completed</div><div class="fv">29 <span class="f-pct">19%</span></div></div>
-              <div class="f-row accent"><div class="fl">Revenue captured</div><div class="fv">$163,434</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Job type mix — 707 jobs</div>
-            <div class="bar-row"><div class="bar-label">Water damage</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#00C2FF;"></div></div><div class="bar-val">322 (46%)</div></div>
-            <div class="bar-row"><div class="bar-label">Gen. cleaning</div><div class="bar-track"><div class="bar-fill" style="width:34%;background:#8F6AFF;"></div></div><div class="bar-val">108 (15%)</div></div>
-            <div class="bar-row"><div class="bar-label">Mold</div><div class="bar-track"><div class="bar-fill" style="width:27%;background:#00E5A0;"></div></div><div class="bar-val">86 (12%)</div></div>
-            <div class="bar-row"><div class="bar-label">Reconstruction</div><div class="bar-track"><div class="bar-fill" style="width:19%;background:#FFB300;"></div></div><div class="bar-val">62 (9%)</div></div>
-            <div class="bar-row"><div class="bar-label">Sewage</div><div class="bar-track"><div class="bar-fill" style="width:12%;background:#FF7085;"></div></div><div class="bar-val">38 (5%)</div></div>
-            <div class="bar-row"><div class="bar-label">Fire</div><div class="bar-track"><div class="bar-fill" style="width:9%;background:#FF4757;"></div></div><div class="bar-val">29 (4%)</div></div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-title">Key insights <span class="panel-badge tag tag-electric">Live data</span></div>
-            <div class="insight-list">
-              <div class="insight good"><strong>Happy Valley</strong> leads operations — 97.6% call answer rate, 52.4% call-to-lead. Document and distribute their intake process.</div>
-              <div class="insight danger"><strong>Indiana County</strong> misses 1 in 3 calls (32.7%). At $216/call = ~$3,672 in potential lost revenue. Fix immediately.</div>
-              <div class="insight warn"><strong>35% not-sold rate</strong> — 248 jobs at avg $6,058 = $1.5M in unconverted pipeline sitting on the table.</div>
-              <div class="insight electric"><strong>Mold season approaching</strong> — 86 mold jobs YTD, demand peaks May–Aug. Launch campaigns before competitors.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- FRANCHISES -->
-      <div class="screen" id="screen-franchises">
-        <div class="ph">
-          <div class="ph-eye">Franchise Analysis</div>
-          <div class="ph-title">All Five Locations</div>
-          <div class="ph-sub">GBP + LSA + WorkCentre combined</div>
-        </div>
-        <div class="panel" style="margin-bottom:18px;">
-          <div class="panel-title">Network comparison</div>
-          <table class="fr-table">
-            <thead><tr>
-              <th>Franchise</th><th>GBP Views</th><th>GBP Calls</th><th>LSA Leads</th>
-              <th>WC Calls</th><th>Jobs</th><th>Closed</th><th>Revenue</th><th>Rev/Call</th><th>Status</th>
-            </tr></thead>
-            <tbody>
-              <tr><td><div class="fr-name"><div class="fr-swatch" style="background:linear-gradient(135deg,#6C3FFF,#FF2D78);"></div>Ebensburg</div></td><td>2,307</td><td>202</td><td>10</td><td>121</td><td>206</td><td>77</td><td style="font-weight:700;">$79,388</td><td style="font-family:monospace;font-weight:700;">$656</td><td><span class="tag tag-lime">Strong</span></td></tr>
-              <tr><td><div class="fr-name"><div class="fr-swatch" style="background:#00C2FF;"></div>Altoona</div></td><td>1,435</td><td>66</td><td>4</td><td>88</td><td>141</td><td>45</td><td>$31,931</td><td style="font-family:monospace;">$363</td><td><span class="tag tag-sun">Watch</span></td></tr>
-              <tr><td><div class="fr-name"><div class="fr-swatch" style="background:#00E5A0;"></div>Happy Valley</div></td><td>1,591</td><td>22</td><td>34</td><td>82</td><td>137</td><td>58</td><td>$30,738</td><td style="font-family:monospace;">$375</td><td><span class="tag tag-electric">Ops leader</span></td></tr>
-              <tr><td><div class="fr-name"><div class="fr-swatch" style="background:#FF4757;"></div>S. Blair/Bed</div></td><td>1,041</td><td>17</td><td>4</td><td>38</td><td>84</td><td>30</td><td>$10,147</td><td style="font-family:monospace;">$267</td><td><span class="tag tag-pop">Needs help</span></td></tr>
-              <tr><td><div class="fr-name"><div class="fr-swatch" style="background:#FFB300;"></div>Indiana Co.</div></td><td>2,095</td><td>46</td><td>23</td><td>52</td><td>139</td><td>48</td><td>$11,231</td><td style="font-family:monospace;">$216</td><td><span class="tag tag-pop">Ops failing</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">GBP views vs LSA leads</div>
-            <div class="bar-row"><div class="bar-label">Ebensburg</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#6C3FFF,#FF2D78);"></div></div><div class="bar-val">2307 / 10</div></div>
-            <div class="bar-row"><div class="bar-label">Indiana Co.</div><div class="bar-track"><div class="bar-fill" style="width:91%;background:#FFB300;"></div></div><div class="bar-val">2095 / 23</div></div>
-            <div class="bar-row"><div class="bar-label">Happy Valley</div><div class="bar-track"><div class="bar-fill" style="width:69%;background:#00E5A0;"></div></div><div class="bar-val">1591 / 34</div></div>
-            <div class="bar-row"><div class="bar-label">Altoona</div><div class="bar-track"><div class="bar-fill" style="width:62%;background:#00C2FF;"></div></div><div class="bar-val">1435 / 4</div></div>
-            <div class="bar-row"><div class="bar-label">S. Blair/Bed</div><div class="bar-track"><div class="bar-fill" style="width:45%;background:#FF4757;"></div></div><div class="bar-val">1041 / 4</div></div>
-          </div>
-          
-          </div>
-        </div>
-      </div>
-
-      <!-- PIPELINE -->
-      <div class="screen" id="screen-pipeline">
-        <div class="ph">
-          <div class="ph-eye">Call Pipeline</div>
-          <div class="ph-title">Calls → Revenue</div>
-          <div class="ph-sub">WorkCentre + LSA combined</div>
-        </div>
-
-        <div class="grid-2" style="margin-bottom:18px;">
-          <div class="panel">
-            <div class="panel-title">Call-to-lead conversion rate</div>
-            <div class="funnel">
-              <div class="f-row" style="background:var(--lime-bg);border-color:rgba(0,229,160,0.2);"><div class="fl" style="color:#00A370;font-weight:700;">Happy Valley</div><div class="fv" style="color:#00A370;">52.4%</div></div>
-              <div class="f-row"><div class="fl">Indiana Co.</div><div class="fv">44.2%</div></div>
-              <div class="f-row"><div class="fl">Altoona</div><div class="fv">43.2%</div></div>
-              <div class="f-row"><div class="fl">S. Blair/Bed</div><div class="fv">39.5%</div></div>
-              <div class="f-row" style="background:var(--pop-bg);border-color:rgba(255,71,87,0.15);"><div class="fl" style="color:var(--pop);font-weight:700;">Ebensburg</div><div class="fv" style="color:var(--pop);">28.1%</div></div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Revenue per call — by franchise</div>
-            <div class="bar-row"><div class="bar-label">Ebensburg</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#6C3FFF,#FF2D78);"></div></div><div class="bar-val">$656</div></div>
-            <div class="bar-row"><div class="bar-label">Happy Valley</div><div class="bar-track"><div class="bar-fill" style="width:57%;background:#00E5A0;"></div></div><div class="bar-val">$375</div></div>
-            <div class="bar-row"><div class="bar-label">Altoona</div><div class="bar-track"><div class="bar-fill" style="width:55%;background:#00C2FF;"></div></div><div class="bar-val">$363</div></div>
-            <div class="bar-row"><div class="bar-label">S. Blair/Bed</div><div class="bar-track"><div class="bar-fill" style="width:41%;background:#FF4757;"></div></div><div class="bar-val">$267</div></div>
-            <div class="bar-row"><div class="bar-label">Indiana Co.</div><div class="bar-track"><div class="bar-fill" style="width:33%;background:#FFB300;"></div></div><div class="bar-val">$216</div></div>
-            <div class="insight electric" style="margin-top:12px;"><strong>Ebensburg earns 3× more per call than Indiana County.</strong> The difference is job type mix — more commercial and reconstruction work lifts the average.</div>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">LSA brand recognition — direct vs categorical</div>
-            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.5;">Direct brand = customers searching you by name. High brand equity signal.</div>
-            <div style="display:flex;flex-direction:column;gap:7px;">
-              <div style="display:flex;justify-content:space-between;padding:9px 13px;background:var(--lime-bg);border-radius:9px;font-size:13px;"><span style="color:#00A370;font-weight:700;">Happy Valley</span><span style="font-weight:700;"><span style="color:#00A370;">20 direct</span> / 14 categorical</span></div>
-              <div style="display:flex;justify-content:space-between;padding:9px 13px;background:var(--electric-bg);border-radius:9px;font-size:13px;"><span style="color:var(--electric);font-weight:700;">Indiana Co.</span><span style="font-weight:700;"><span style="color:var(--electric);">17 direct</span> / 6 categorical</span></div>
-              <div style="display:flex;justify-content:space-between;padding:9px 13px;background:var(--sun-bg);border-radius:9px;font-size:13px;"><span style="color:#CC8F00;font-weight:700;">Ebensburg</span><span style="font-weight:700;"><span style="color:#CC8F00;">0 direct</span> / 10 categorical</span></div>
-              <div style="display:flex;justify-content:space-between;padding:9px 13px;background:var(--bg-off);border-radius:9px;font-size:13px;border:1px solid var(--border);"><span style="color:var(--text-muted);font-weight:600;">Altoona</span><span style="font-weight:700;">0 direct / 4 categorical</span></div>
-              <div style="display:flex;justify-content:space-between;padding:9px 13px;background:var(--bg-off);border-radius:9px;font-size:13px;border:1px solid var(--border);"><span style="color:var(--text-muted);font-weight:600;">S. Blair/Bed</span><span style="font-weight:700;">0 direct / 4 categorical</span></div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="panel-title">LSA job type capture rate</div>
-            <div class="insight danger" style="margin-bottom:12px;"><strong>53% of LSA leads have no job type recorded.</strong> Fix intake script to capture this at first touch.</div>
-            <div class="bar-row"><div class="bar-label">Unknown</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#D4D0E8;"></div></div><div class="bar-val">45 (53%)</div></div>
-            <div class="bar-row"><div class="bar-label">Water dmg</div><div class="bar-track"><div class="bar-fill" style="width:38%;background:#00C2FF;"></div></div><div class="bar-val">17 (20%)</div></div>
-            <div class="bar-row"><div class="bar-label">Mold</div><div class="bar-track"><div class="bar-fill" style="width:36%;background:#00E5A0;"></div></div><div class="bar-val">16 (19%)</div></div>
-            <div class="bar-row"><div class="bar-label">Fire</div><div class="bar-track"><div class="bar-fill" style="width:13%;background:#FF4757;"></div></div><div class="bar-val">6 (7%)</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- JOBS -->
-      <div class="screen" id="screen-jobs">
-        <div class="ph">
-          <div class="ph-eye">Job Analysis</div>
-          <div class="ph-title">WorkCentre Job Data</div>
-          <div class="ph-sub">707 jobs across all 5 franchises</div>
-        </div>
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Referral source breakdown</div>
-            <div class="bar-row"><div class="bar-label">Web search</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#00C2FF;"></div></div><div class="bar-val">226 (32%)</div></div>
-            <div class="bar-row"><div class="bar-label">Existing rel.</div><div class="bar-track"><div class="bar-fill" style="width:58%;background:#6C3FFF;"></div></div><div class="bar-val">131 (19%)</div></div>
-            <div class="bar-row"><div class="bar-label">Advertising</div><div class="bar-track"><div class="bar-fill" style="width:37%;background:#FF2D78;"></div></div><div class="bar-val">83 (12%)</div></div>
-            <div class="bar-row"><div class="bar-label">Unknown</div><div class="bar-track"><div class="bar-fill" style="width:25%;background:#C4BEDB;"></div></div><div class="bar-val">57 (8%)</div></div>
-            <div class="bar-row"><div class="bar-label">Ins. adjuster</div><div class="bar-track"><div class="bar-fill" style="width:11%;background:#FFB300;"></div></div><div class="bar-val">24 (3%)</div></div>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Job status breakdown</div>
-            <div class="bar-row"><div class="bar-label">Closed</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#00E5A0;"></div></div><div class="bar-val">258 (36%)</div></div>
-            <div class="bar-row"><div class="bar-label">Not sold</div><div class="bar-track"><div class="bar-fill" style="width:96%;background:#FF4757;"></div></div><div class="bar-val">248 (35%)</div></div>
-            <div class="bar-row"><div class="bar-label">In progress</div><div class="bar-track"><div class="bar-fill" style="width:78%;background:#00C2FF;"></div></div><div class="bar-val">201 (28%)</div></div>
-            <div class="insight warn" style="margin-top:12px;"><strong>248 not-sold × $6,058 avg = $1.5M unconverted pipeline.</strong> 10% recovery = $150k with zero new spend.</div>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="panel-title">Average estimate value by franchise</div>
-          <div class="grid-3" style="margin:0;">
-            <div style="text-align:center;padding:16px;background:var(--electric-bg);border:1.5px solid rgba(108,63,255,0.2);border-radius:12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--electric);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;">Ebensburg</div>
-              <div style="font-size:28px;font-weight:800;color:var(--electric);font-family:'Space Grotesk',sans-serif;">$7,503</div>
-              <div style="font-size:11px;color:#00A370;margin-top:4px;font-weight:600;">Highest — commercial mix</div>
-            </div>
-            <div style="text-align:center;padding:16px;background:var(--bg-off);border:1.5px solid var(--border);border-radius:12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;">Indiana Co.</div>
-              <div style="font-size:28px;font-weight:800;color:var(--text);font-family:'Space Grotesk',sans-serif;">$6,509</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:4px;font-weight:600;">Strong job value</div>
-            </div>
-            <div style="text-align:center;padding:16px;background:var(--bg-off);border:1.5px solid var(--border);border-radius:12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;">Altoona</div>
-              <div style="font-size:28px;font-weight:800;color:var(--text);font-family:'Space Grotesk',sans-serif;">$6,199</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:4px;font-weight:600;">Network average</div>
-            </div>
-            <div style="text-align:center;padding:16px;background:var(--bg-off);border:1.5px solid var(--border);border-radius:12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;">S. Blair/Bed</div>
-              <div style="font-size:28px;font-weight:800;color:var(--text);font-family:'Space Grotesk',sans-serif;">$5,580</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:4px;font-weight:600;">Below average</div>
-            </div>
-            <div style="text-align:center;padding:16px;background:var(--pop-bg);border:1.5px solid rgba(255,71,87,0.2);border-radius:12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--pop);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;">Happy Valley</div>
-              <div style="font-size:28px;font-weight:800;color:var(--pop);font-family:'Space Grotesk',sans-serif;">$3,819</div>
-              <div style="font-size:11px;color:var(--pop);margin-top:4px;font-weight:600;">Lowest — residential mix</div>
-            </div>
-            <div style="text-align:center;padding:16px;background:var(--electric-bg);border:1.5px solid rgba(108,63,255,0.15);border-radius:12px;">
-              <div style="font-size:11px;font-weight:700;color:var(--electric);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;">Network avg</div>
-              <div style="font-size:28px;font-weight:800;color:var(--electric);font-family:'Space Grotesk',sans-serif;">$6,058</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:4px;font-weight:600;">172 jobs with estimates</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- OWNER REPORT -->
-      <div class="screen" id="screen-report">
-        <div class="ph">
-          <div class="ph-eye">Owner Report</div>
-          <div class="ph-title">Franchise Performance Summary</div>
-          <div class="ph-sub">Jan 1 – Apr 26, 2026 · Ready to share with owners</div>
-        </div>
-        <div class="qa-strip">
-          <button class="btn btn-electric" onclick="sendToAI('Generate a complete written executive summary report for all 5 SERVPRO franchise owners in Pennsylvania for Jan-Apr 2026. Include all metrics and 3 specific actions per franchise.')">✦ Generate full written report</button>
-          <button class="qa-btn" onclick="sendToAI('Write a one-page owner briefing for SERVPRO of Ebensburg covering Jan-Apr 2026 — key numbers and top 3 actions.')">Ebensburg one-pager</button>
-          <button class="qa-btn" onclick="sendToAI('Write a one-page owner briefing for SERVPRO of Indiana County emphasizing their strong LSA lead volume and not-sold pipeline.')">Indiana Co. one-pager</button>
-          <button class="qa-btn" onclick="sendToAI('Write a one-page owner briefing for SERVPRO of Happy Valley highlighting their operational excellence and how to increase commercial job volume.')">Happy Valley one-pager</button>
-        </div>
-        <div id="franchiseCards"></div>
-      </div>
-
-      <!-- STRATEGY -->
-      <div class="screen" id="screen-strategy">
-        <div class="ph">
-          <div class="ph-eye">Strategic Recommendations</div>
-          <div class="ph-title">Network Growth Brief</div>
-          <div class="ph-sub">Based on Jan–Apr 2026 data across all 4 sources</div>
-        </div>
-        <div class="qa-strip">
-          <button class="btn btn-electric" onclick="sendToAI('As a master business strategist and digital analyst, give me a comprehensive 90-day growth plan for the SERVPRO network prioritised by revenue impact.')">✦ Generate 90-day growth plan</button>
-          <button class="qa-btn" onclick="sendToAI('What is the single highest-ROI marketing action across the entire SERVPRO network right now, and why?')">Highest ROI action</button>
-          <button class="qa-btn" onclick="sendToAI('Build a full mold season campaign brief for all 5 SERVPRO franchises — timing, channels, copy angles, budget split.')">Mold season campaign</button>
-          <button class="qa-btn" onclick="sendToAI('Write a not-sold follow-up email and SMS sequence for SERVPRO franchises — 3 touches over 21 days.')">Not-sold follow-up sequence</button>
-        </div>
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-title">Network priorities — by revenue impact</div>
-            <div class="action-list">
-              <div class="action-item"><div class="action-num">1</div><div><strong style="color:var(--text);">Recover the not-sold pipeline</strong> — 248 jobs at avg $6,058 = $1.5M in quoted but unconverted work. A 3-touch follow-up sequence recovers revenue with zero new ad spend.</div></div>
-              <div class="action-item"><div class="action-num">2</div><div><strong style="color:var(--text);">Not-sold follow-up system</strong> — 248 jobs × $6,058 = $1.5M in pipeline. 10% recovery = $150k with zero ad spend.</div></div>
-              <div class="action-item"><div class="action-num">3</div><div><strong style="color:var(--text);">Increase Ebensburg LSA budget</strong> — $656/call is 3× network avg. Adding 20 more leads = ~$13k incremental revenue.</div></div>
-              <div class="action-item"><div class="action-num">4</div><div><strong style="color:var(--text);">Launch mold season campaign</strong> — 86 mold jobs YTD, demand peaks May–Aug. Campaign now beats competitors to market.</div></div>
-              <div class="action-item"><div class="action-num">5</div><div><strong style="color:var(--text);">Fix GBP map pins (Altoona + S.Blair)</strong> — 10-min fix, recovers direction request traffic and high-intent local searches.</div></div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Data gaps — what would sharpen this</div>
-            <div class="insight-list">
-              <div class="insight sky"><strong>Google Ads spend</strong> — Without cost data I can't calculate true ROI or cost-per-acquired-job. Most critical missing dataset.</div>
-              <div class="insight sky"><strong>GA4 website traffic</strong> — Reveals what happens after a GBP click. Which pages convert. Which lose customers.</div>
-              <div class="insight sky"><strong>Social media insights</strong> — Correlates posting with lead volume. Tells you which content type actually drives calls.</div>
-              <div class="insight sky"><strong>Invoca call transcripts</strong> — Most underutilised asset. Exact customer language → ad copy, GBP posts, web content.</div>
-              <div class="insight warn"><strong>Competitor rank tracker</strong> — BrightLocal or Whitespark showing where each franchise ranks vs competitors for key terms.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- SETTINGS / SHEETS SETUP -->
-      <div class="screen" id="screen-settings">
-        <div class="ph">
-          <div class="ph-eye">Database</div>
-          <div class="ph-title">Google Sheets Setup</div>
-          <div class="ph-sub">Connect your dashboard to a Google Sheet for persistent cloud storage</div>
-        </div>
-
-        <div style="background:var(--electric-bg);border:2px solid var(--electric);border-radius:var(--r-lg);padding:24px;margin-bottom:20px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--electric);margin-bottom:8px;">Step 1 — Paste your Apps Script URL here</div>
-          <div style="font-size:14px;color:var(--text-mid);margin-bottom:16px;line-height:1.6;">After deploying your Google Apps Script, paste the Web App URL into the box below and click <strong>Save &amp; Connect</strong>.</div>
-          <input class="sheets-url-input" id="sheetsUrlInput"
-            placeholder="https://script.google.com/macros/s/AKfycb.../exec"
-            value=""
-            style="font-size:14px;padding:13px 16px;border:2px solid var(--electric);margin-bottom:12px;">
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button class="btn btn-electric" style="font-size:14px;padding:10px 20px;" onclick="saveSheetUrl()">✓ Save &amp; Connect</button>
-            <button class="btn btn-outline" onclick="clearSheetUrl()" style="color:var(--pop);border-color:var(--pop);">Disconnect</button>
-          </div>
-          <div id="connectionResult" style="margin-top:12px;font-size:13px;display:none;padding:10px 14px;border-radius:9px;"></div>
-        </div>
-
-        <div class="db-panel">
-          <h3>Step 2 — Import data (it saves automatically)</h3>
-          <p>When you import any CSV file using the Import Data wizard, it automatically saves to your Google Sheet. On every future visit, your data loads from the Sheet instantly — no re-importing needed.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button class="btn btn-electric" onclick="showImportModal()">⬆ Import Data Now</button>
-            <button class="btn btn-outline" onclick="loadFromSheets()">↓ Reload from Sheets</button>
-            <button class="btn btn-outline" onclick="exportSheetBackup()">⬇ Download backup JSON</button>
-          </div>
-        </div>
-
-        <div class="db-panel">
-          <h3>Saved datasets</h3>
-          <p>All data periods stored in your Google Sheet.</p>
-          <div id="savedDatasets">
-            <div style="color:var(--text-muted);font-size:13px;">Connect to Google Sheets to see saved datasets.</div>
-          </div>
-        </div>
-
-        <div class="db-panel" style="background:var(--electric-bg);border-color:rgba(108,63,255,0.2);">
-          <h3 style="color:var(--electric);">Quick Setup Guide</h3>
-          <p>Follow these steps once to connect your Google Sheet:</p>
-          <ol class="step-list" style="margin-top:4px;">
-            <li><span class="step-n">1</span><span>Go to <span class="code-path">sheets.google.com</span> → create a new sheet → name it <strong>SERVPRO Intel</strong>.</span></li>
-            <li><span class="step-n">2</span><span>In the sheet, click <strong>Extensions → Apps Script</strong>. A new tab opens.</span></li>
-            <li><span class="step-n">3</span><span>Delete all the default code. Paste in the entire contents of your <strong>Code.gs</strong> file (download below).</span></li>
-            <li><span class="step-n">4</span><span>Click <strong>Deploy → New deployment</strong>. Type: <strong>Web app</strong>. Execute as: <strong>Me</strong>. Who has access: <strong>Anyone</strong>. Click <strong>Deploy</strong>.</span></li>
-            <li><span class="step-n">5</span><span>Copy the <strong>Web app URL</strong> that appears and paste it above in Step 1.</span></li>
-            <li><span class="step-n">6</span><span>That's it — your dashboard now saves all imported data to the cloud.</span></li>
-          </ol>
-          <button class="btn btn-electric" style="margin-top:14px;" onclick="downloadAppsScript()">⬇ Download Code.gs</button>
-        </div>
-      </div>
-
-    </div><!-- /main-scroll -->
-  </div><!-- /main -->
-</div><!-- /app -->
-
-<!-- MODAL -->
-<div class="modal-overlay" id="welcomeModal" style="display:none;">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div id="welcomeState">
-      <div class="modal-eyebrow">SERVPRO Marketing Intelligence</div>
-      <h2>Good to see you back.</h2>
-      <p class="modal-sub">Your last session has Jan 1 – Apr 26, 2026 data loaded. Import fresh data or continue with the current dataset?</p>
-      <div class="choice-grid">
-        <div class="choice-card" onclick="startImport()">
-          <div class="choice-icon">⬆</div>
-          <div class="choice-title">Import new data</div>
-          <div class="choice-desc">I'll walk you through exactly what to download from each source — including what additional data would sharpen the analysis.</div>
-        </div>
-        <div class="choice-card" onclick="closeModal()">
-          <div class="choice-icon">◎</div>
-          <div class="choice-title">Use current data</div>
-          <div class="choice-desc">Open the dashboard with the existing Jan–Apr 2026 dataset already loaded.</div>
-        </div>
-      </div>
-    </div>
-
-    <div id="importWizard" style="display:none;">
-      <div class="modal-eyebrow">Data Import Wizard</div>
-      <h2 style="margin-bottom:6px;">Let's get your data.</h2>
-      <p class="modal-sub" style="margin-bottom:18px;">Follow each source below. Expand, follow the steps, upload your file. I'll tell you exactly what to download and where.</p>
-
-      <div class="wiz-progress">
-        <div class="wiz-dot active" id="wd0"></div>
-        <div class="wiz-dot" id="wd1"></div>
-        <div class="wiz-dot" id="wd2"></div>
-        <div class="wiz-dot" id="wd3"></div>
-        <div class="wiz-dot" id="wd4"></div>
-        <div class="wiz-dot" id="wd5"></div>
-        <div class="wiz-dot" id="wd6"></div>
-        <div class="wiz-dot" id="wd7"></div>
-        <span class="wiz-label" id="wizLabel">Step 1 of 8 — Google Business Profile</span>
-      </div>
-
-      <!-- GBP -->
-      <div class="src-card open" id="src-gbp">
-        <div class="src-card-hdr" onclick="toggleSrc('src-gbp')">
-          <div class="src-card-left"><span class="src-badge req">Required</span><div><div class="src-card-name">Google Business Profile</div><div class="src-card-meta">Views, calls, directions, website clicks per listing</div></div></div>
-          <span class="src-card-chev">▲</span>
-        </div>
-        <div class="src-card-body">
-          <ol class="step-list">
-            <li><span class="step-n">1</span><span>Go to <span class="code-path">business.google.com/locations</span> — opens Business Profile Manager.</span></li>
-            <li><span class="step-n">2</span><span>Check the boxes next to <strong>all 5 franchise listings</strong> simultaneously.</span></li>
-            <li><span class="step-n">3</span><span>Click <strong>Actions</strong> (top right) → <strong>Insights</strong>.</span></li>
-            <li><span class="step-n">4</span><span>Select your time period. Click <strong>Download Report</strong>. One CSV covers all 5.</span></li>
-          </ol>
-          <div class="tip-box"><strong>Pro tip:</strong> Export monthly and name files GBP_May_2026.csv etc. Building a historical archive reveals seasonality patterns over time.</div>
-          <div class="upload-zone" onclick="document.getElementById('u-gbp').click()">
-            <input type="file" id="u-gbp" accept=".csv" onchange="fileLoaded('gbp',this)">
-            <div class="uz-icon">📄</div><div class="uz-label">Drop GBP CSV here or click to upload</div><div class="uz-sub">From business.google.com</div>
-          </div>
-          <div id="fl-gbp" class="file-loaded" style="display:none;">✓ <span id="fl-gbp-name"></span></div>
-        </div>
-      </div>
-
-      <!-- LSA -->
-      <div class="src-card" id="src-lsa">
-        <div class="src-card-hdr" onclick="toggleSrc('src-lsa')">
-          <div class="src-card-left"><span class="src-badge req">Required</span><div><div class="src-card-name">Google Local Services Ads</div><div class="src-card-meta">Lead inbox — job type, location, charge status</div></div></div>
-          <span class="src-card-chev">▼</span>
-        </div>
-        <div class="src-card-body">
-          <ol class="step-list">
-            <li><span class="step-n">1</span><span>Go to <span class="code-path">ads.google.com/localservices</span> and sign in.</span></li>
-            <li><span class="step-n">2</span><span>Select each franchise account. Click <strong>Leads → Lead inbox</strong>.</span></li>
-            <li><span class="step-n">3</span><span>Set date range → click the <strong>Download</strong> icon → CSV. Repeat for all 5.</span></li>
-          </ol>
-          <div class="tip-box"><strong>Note:</strong> 53% of your current LSA leads have no job type. After fixing your intake script, this field auto-populates from the LSA category the customer selected.</div>
-          <div class="upload-zone" onclick="document.getElementById('u-lsa').click()">
-            <input type="file" id="u-lsa" accept=".csv" multiple onchange="fileLoaded('lsa',this)">
-            <div class="uz-icon">📱</div><div class="uz-label">Drop LSA CSVs (all 5 franchises)</div><div class="uz-sub">Multiple files accepted</div>
-          </div>
-          <div id="fl-lsa" class="file-loaded" style="display:none;">✓ <span id="fl-lsa-name"></span></div>
-        </div>
-      </div>
-
-      <!-- WC CALLS -->
-      <div class="src-card" id="src-wcc">
-        <div class="src-card-hdr" onclick="toggleSrc('src-wcc')">
-          <div class="src-card-left"><span class="src-badge req">Required</span><div><div class="src-card-name">WorkCentre — Franchise Call Report</div><div class="src-card-meta">Revenue, call-to-lead conversion, leads, jobs in progress</div></div></div>
-          <span class="src-card-chev">▼</span>
-        </div>
-        <div class="src-card-body">
-          <ol class="step-list">
-            <li><span class="step-n">1</span><span>Log into Tableau → open <strong>Franchise Report</strong> view.</span></li>
-            <li><span class="step-n">2</span><span>Set <strong>Dimension Selected</strong> to each franchise one at a time → Download → Data (CSV).</span></li>
-            <li><span class="step-n">3</span><span>Export for all 5 franchises. Upload all together below.</span></li>
-          </ol>
-          <div class="upload-zone" onclick="document.getElementById('u-wcc').click()">
-            <input type="file" id="u-wcc" accept=".csv" multiple onchange="fileLoaded('wcc',this)">
-            <div class="uz-icon">📊</div><div class="uz-label">Drop WorkCentre Call CSVs (all 5)</div><div class="uz-sub">Tableau Franchise Report exports</div>
-          </div>
-          <div id="fl-wcc" class="file-loaded" style="display:none;">✓ <span id="fl-wcc-name"></span></div>
-        </div>
-      </div>
-
-      <!-- WC JOBS -->
-      <div class="src-card" id="src-wcj">
-        <div class="src-card-hdr" onclick="toggleSrc('src-wcj')">
-          <div class="src-card-left"><span class="src-badge req">Required</span><div><div class="src-card-name">WorkCentre — All Job Details</div><div class="src-card-meta">Loss type, referral source, estimates, job status</div></div></div>
-          <span class="src-card-chev">▼</span>
-        </div>
-        <div class="src-card-body">
-          <ol class="step-list">
-            <li><span class="step-n">1</span><span>In Tableau open <strong>All Details</strong> view.</span></li>
-            <li><span class="step-n">2</span><span>Set date range → Download → Data. This single file covers all 5 franchises.</span></li>
-          </ol>
-          <div class="upload-zone" onclick="document.getElementById('u-wcj').click()">
-            <input type="file" id="u-wcj" accept=".csv" onchange="fileLoaded('wcj',this)">
-            <div class="uz-icon">🗂</div><div class="uz-label">Drop WorkCentre Jobs Detail CSV</div><div class="uz-sub">All_Details_in_Detail_and_View_data.csv</div>
-          </div>
-          <div id="fl-wcj" class="file-loaded" style="display:none;">✓ <span id="fl-wcj-name"></span></div>
-        </div>
-      </div>
-
-      <!-- GA4 -->
-      <div class="src-card" id="src-ga4">
-        <div class="src-card-hdr" onclick="toggleSrc('src-ga4')">
-          <div class="src-card-left"><span class="src-badge rec">Recommended</span><div><div class="src-card-name">Google Analytics 4 — Website Traffic</div><div class="src-card-meta">Sessions, conversions, channel attribution per franchise website</div></div></div>
-          <span class="src-card-chev">▼</span>
-        </div>
-        <div class="src-card-body">
-          <ol class="step-list">
-            <li><span class="step-n">1</span><span>Go to <span class="code-path">analytics.google.com</span> → select each franchise property.</span></li>
-            <li><span class="step-n">2</span><span>Reports → Acquisition → Traffic Acquisition → set date range → Share icon → Download CSV.</span></li>
-            <li><span class="step-n">3</span><span>Also export Conversions by channel if you have conversion events set up.</span></li>
-          </ol>
-          <div class="rec-box"><strong>Strategic value:</strong> Shows whether LSA traffic converts at a higher rate than organic — critical for deciding how to split ad budget. Also reveals what the 53% "unknown" LSA job types are doing on-site.</div>
-          <div class="upload-zone" onclick="document.getElementById('u-ga4').click()">
-            <input type="file" id="u-ga4" accept=".csv" multiple onchange="fileLoaded('ga4',this)">
-            <div class="uz-icon">📈</div><div class="uz-label">Drop GA4 CSV exports (one per franchise)</div><div class="uz-sub">Optional but highly recommended</div>
-          </div>
-          <div id="fl-ga4" class="file-loaded" style="display:none;">✓ <span id="fl-ga4-name"></span></div>
-        </div>
-      </div>
-
-      <!-- GOOGLE ADS -->
-      <div class="src-card" id="src-gads">
-        <div class="src-card-hdr" onclick="toggleSrc('src-gads')">
-          <div class="src-card-left"><span class="src-badge rec">Recommended</span><div><div class="src-card-name">Google Ads — Campaign Performance</div><div class="src-card-meta">Spend, impressions, CTR, cost per lead by campaign</div></div></div>
-          <span class="src-card-chev">▼</span>
-        </div>
-        <div class="src-card-body">
-          <ol class="step-list">
-            <li><span class="step-n">1</span><span>Go to <span class="code-path">ads.google.com</span> → Campaigns → set date range.</span></li>
-            <li><span class="step-n">2</span><span>Click Download icon → CSV. Include the Keywords report if available.</span></li>
-            <li><span class="step-n">3</span><span>If LSA and regular Google Ads are separate accounts, export both.</span></li>
-          </ol>
-          <div class="rec-box"><strong>Strategic value:</strong> Without spend data there is no ROI calculation. With it I can tell you exactly which franchise gets the best return on every marketing dollar and where to shift budget immediately.</div>
-          <div class="upload-zone" onclick="document.getElementById('u-gads').click()">
-            <input type="file" id="u-gads" accept=".csv" multiple onchange="fileLoaded('gads',this)">
-            <div class="uz-icon">💰</div><div class="uz-label">Drop Google Ads CSV exports</div><div class="uz-sub">Campaigns + Keywords reports</div>
-          </div>
-          <div id="fl-gads" class="file-loaded" style="display:none;">✓ <span id="fl-gads-name"></span></div>
-        </div>
-      </div>
-
-      <!-- SOCIAL -->
-      <div class="src-card" id="src-soc">
-        <div class="src-card-hdr" onclick="toggleSrc('src-soc')">
-          <div class="src-card-left"><span class="src-badge nice">Nice to have</span><div><div class="src-card-name">Social Media Insights</div><div class="src-card-meta">Facebook/Instagram reach, engagement, follows per franchise</div></div></div>
-          <span class="src-card-chev">▼</span>
-        </div>
-        <div class="src-card-body">
-          <ol class="step-list">
-            <li><span class="step-n">1</span><span>Go to <span class="code-path">business.facebook.com</span> → each franchise page → Insights → Export data → Post data CSV.</span></li>
-            <li><span class="step-n">2</span><span>Set date range → export Page data CSV as well. Repeat per franchise.</span></li>
-          </ol>
-          <div class="rec-box"><strong>Strategic value:</strong> Reveals which post types (job photos, before/after, tips) drive the most engagement per franchise — turns your content calendar from guesswork to data-driven.</div>
-          <div class="upload-zone" onclick="document.getElementById('u-soc').click()">
-            <input type="file" id="u-soc" accept=".csv,.xlsx" multiple onchange="fileLoaded('soc',this)">
-            <div class="uz-icon">📲</div><div class="uz-label">Drop social insights exports</div><div class="uz-sub">Facebook/Instagram CSV or XLSX</div>
-          </div>
-          <div id="fl-soc" class="file-loaded" style="display:none;">✓ <span id="fl-soc-name"></span></div>
-        </div>
-      </div>
-
-      <!-- INVOCA -->
-      <div class="src-card" id="src-inv">
-        <div class="src-card-hdr" onclick="toggleSrc('src-inv')">
-          <div class="src-card-left"><span class="src-badge nice">Nice to have</span><div><div class="src-card-name">Invoca — Call Intelligence</div><div class="src-card-meta">Call logs, keywords, caller intent, duration, outcomes</div></div></div>
-          <span class="src-card-chev">▼</span>
-        </div>
-        <div class="src-card-body">
-          <ol class="step-list">
-            <li><span class="step-n">1</span><span>Log into Invoca → Reports → Call Log → set date range → Export → CSV.</span></li>
-            <li><span class="step-n">2</span><span>If you have Conversation Analytics, export keyword reports and any call summaries.</span></li>
-            <li><span class="step-n">3</span><span>Ensure call outcome labels (Lead / Not a lead / Existing customer) are included in the export.</span></li>
-          </ol>
-          <div class="rec-box"><strong>Strategic value:</strong> Pasting call summaries here lets me extract the exact language customers use — feeding your ad copy, GBP posts, and web content directly from your customers' own words.</div>
-          <div class="upload-zone" onclick="document.getElementById('u-inv').click()">
-            <input type="file" id="u-inv" accept=".csv" multiple onchange="fileLoaded('inv',this)">
-            <div class="uz-icon">📞</div><div class="uz-label">Drop Invoca call log CSVs</div><div class="uz-sub">Call metadata + transcript/keyword exports</div>
-          </div>
-          <div id="fl-inv" class="file-loaded" style="display:none;">✓ <span id="fl-inv-name"></span></div>
-        </div>
-      </div>
-
-      <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-        <div style="font-size:13px;color:var(--text-muted);" id="wizStatus">Upload what you have — skip sources you don't have access to yet.</div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-outline" onclick="closeModal()">Skip for now</button>
-          <button class="btn btn-electric" onclick="closeModal()">Open dashboard →</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- AI PANEL -->
-<div class="ai-panel" id="aiPanel">
-  <div class="ai-header">
-    <div class="ai-title-row">
-      <div class="ai-live-dot"></div>
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="results-header">
       <div>
-        <div class="ai-title">Marketing AI</div>
-        <div class="ai-sub-label">All SERVPRO data loaded</div>
+        <div class="results-title" id="resultsTitle">Call analysis</div>
+        <div class="results-meta" id="resultsMeta"></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="copy-btn" style="padding:8px 14px;font-size:12px;" onclick="copyResults()">Copy full report</button>
+        <button class="btn btn-outline" style="padding:8px 16px;font-size:13px;" onclick="saveToHistory()">Save to history</button>
       </div>
     </div>
-    <button class="ai-close" onclick="toggleAI()">✕</button>
+    <div class="panel" style="margin-bottom:18px;">
+      <div class="raw-output" id="analysisOutput"></div>
+    </div>
   </div>
-  <div class="ai-msgs" id="aiMsgs">
-    <div class="ai-msg assistant">Hi! I have your full Jan–Apr 2026 SERVPRO data loaded — GBP, LSA leads, WorkCentre calls, and 707 jobs across all 5 franchises. Ask me anything, request reports, generate content, or get strategic analysis.</div>
-  </div>
-  <div class="ai-input-row">
-    <textarea class="ai-textarea" id="aiInput" placeholder="Ask anything about the data..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
-    <button class="ai-send" onclick="sendMsg()">↑</button>
-  </div>
-</div>
 
-<button class="ai-fab" id="aiFab" onclick="toggleAI()">✦</button>
+  <!-- HISTORY -->
+  <div class="history-section">
+    <h2>Saved analyses</h2>
+    <div id="historyList"></div>
+  </div>
+
+</div>
 
 <script>
-// ── GOOGLE SHEETS CONFIG ──────────────────────────────────────────────────
-// Your Apps Script Web App URL is stored in localStorage so it persists
-// across sessions but isn't hardcoded into your public GitHub file.
-let SHEET_URL = localStorage.getItem('servpro_sheet_url') || '';
+const SYSTEM = `You are a master marketing strategist and call analytics expert for SERVPRO of Central Pennsylvania — a restoration and reconstruction business with 5 franchises (Ebensburg, Altoona, Happy Valley, Southern Blair/Bedford, Indiana County).
 
-// ── APPS SCRIPT CODE (downloaded when user clicks button) ─────────────────
-const APPS_SCRIPT_CODE = `// SERVPRO Marketing Intelligence — Google Apps Script
-// Paste this entire file into your Apps Script editor and deploy as a Web App.
-// Sheet name: SERVPRO Intel
-// Deploy settings: Execute as Me, Access: Anyone
+Your job is to analyze Invoca call transcripts and extract actionable marketing intelligence. When given transcripts, produce a structured analysis with these sections:
 
-const SHEET_NAME = 'SERVPRO Intel';
-const SHEET_ID   = SpreadsheetApp.getActiveSpreadsheet().getId();
+## CALL SUMMARY
+- How many calls are in this batch
+- Primary job types mentioned
+- Overall caller sentiment (urgent/distressed/shopping around/existing customer)
 
-function doPost(e) {
-  try {
-    const payload = JSON.parse(e.postData.contents);
-    const action  = payload.action;
-    const ss      = SpreadsheetApp.getActiveSpreadsheet();
+## CUSTOMER LANGUAGE — EXACT PHRASES
+List the exact words and phrases customers used to describe their problem. These are gold for ad copy and content. Quote them directly.
+Examples: "my basement is completely flooded", "I don't know what to do", "there's black stuff on the walls"
 
-    if (action === 'save') {
-      // Save or update a named dataset
-      const tabName = payload.tabName; // e.g. "GBP_2026-05"
-      let sheet = ss.getSheetByName(tabName);
-      if (!sheet) sheet = ss.insertSheet(tabName);
-      sheet.clearContents();
+## JOB TYPES IDENTIFIED
+Breakdown of what types of jobs were discussed.
 
-      const rows = payload.rows; // array of arrays
-      if (rows && rows.length) sheet.getRange(1, 1, rows.length, rows[0].length).setValues(rows);
+## COMMON TRIGGERS & SITUATIONS
+What caused the customer to call? (storm, discovered damage, smell, insurance adjuster told them to, etc.)
 
-      // Update the index tab
-      updateIndex(ss, tabName, payload.meta);
+## OBJECTIONS & HESITATIONS
+What made customers hesitate, push back, or ask about cost/timing? Quote directly where possible.
 
-      return ContentService
-        .createTextOutput(JSON.stringify({ ok: true, tab: tabName }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
+## EMOTIONAL DRIVERS
+What emotions are present? Fear, urgency, confusion, relief when help is offered? These inform ad tone.
 
-    if (action === 'load') {
-      // Load all datasets and return as JSON
-      const tabName = payload.tabName;
-      const sheet   = ss.getSheetByName(tabName);
-      if (!sheet) return json({ ok: false, error: 'Tab not found: ' + tabName });
-      const data = sheet.getDataRange().getValues();
-      return json({ ok: true, tab: tabName, rows: data });
-    }
+## AD COPY IDEAS
+5 headline suggestions for Google Ads or Facebook using the actual customer language from these calls.
 
-    if (action === 'list') {
-      // Return the index of all saved datasets
-      const index = ss.getSheetByName('__index__');
-      if (!index) return json({ ok: true, datasets: [] });
-      const rows = index.getDataRange().getValues().slice(1); // skip header
-      const datasets = rows.map(r => ({
-        tabName:   r[0],
-        source:    r[1],
-        period:    r[2],
-        rows:      r[3],
-        savedAt:   r[4]
-      }));
-      return json({ ok: true, datasets });
-    }
+## GBP POST IDEAS
+3 Google Business Profile post ideas based on what you heard in these calls.
 
-    if (action === 'ping') {
-      return json({ ok: true, message: 'SERVPRO Intel connected', sheetId: SHEET_ID });
-    }
+## CONTENT IDEAS
+2-3 blog post or social content angles based on real customer questions from these calls.
 
-    return json({ ok: false, error: 'Unknown action: ' + action });
+## KEY TAKEAWAYS FOR MARKETING
+2-3 bullet points on what the marketing team should do differently based on this batch.
 
-  } catch(err) {
-    return json({ ok: false, error: err.toString() });
-  }
-}
+Be specific. Use real quotes from the transcripts wherever possible. Write as if briefing a CMO who will act on this immediately.`;
 
-function doGet(e) {
-  // Support GET ping for connection test
-  return json({ ok: true, message: 'SERVPRO Intel API ready' });
-}
+let conversationHistory = [];
+let savedAnalyses = JSON.parse(localStorage.getItem('servpro_call_analyses') || '[]');
 
-function updateIndex(ss, tabName, meta) {
-  let index = ss.getSheetByName('__index__');
-  if (!index) {
-    index = ss.insertSheet('__index__');
-    index.getRange(1,1,1,5).setValues([['Tab','Source','Period','Rows','Saved At']]);
-    index.getRange(1,1,1,5).setFontWeight('bold');
-  }
-  const data   = index.getDataRange().getValues();
-  const rowIdx = data.findIndex(r => r[0] === tabName);
-  const newRow = [tabName, meta.source||'', meta.period||'', meta.rows||0, new Date().toISOString()];
-  if (rowIdx > 0) {
-    index.getRange(rowIdx+1, 1, 1, 5).setValues([newRow]);
-  } else {
-    index.appendRow(newRow);
-  }
-}
+// Character counter
+document.getElementById('transcriptInput').addEventListener('input', function() {
+  const len = this.value.length;
+  const el = document.getElementById('charCount');
+  el.textContent = len.toLocaleString() + ' characters';
+  el.className = 'char-count ' + (len > 1000 ? 'good' : len > 200 ? '' : 'warn');
+});
 
-function json(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}`;
-
-// ── PASSWORD ──────────────────────────────────────────────────────────────
-const PW_HASH = "029dd0986d9728e340f26dadb4770d4a2fb74e557332a61de71dc2377a3a580a";
-
-async function checkPw() {
-  const val = document.getElementById('pwInput').value;
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
-  const hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  if(hash === PW_HASH || val === 'SERVPRO2026') {
-    document.getElementById('gate').style.display = 'none';
-    document.getElementById('app').classList.add('visible');
-    // Try to load data from Sheets on login
-    if(SHEET_URL) {
-      updateSyncBar('loading','Connecting to Sheets…','#6C3FFF');
-      await loadFromSheets();
-    }
-    showWelcome();
-  } else {
-    const err = document.getElementById('pwError');
-    err.style.display = 'block';
-    document.getElementById('pwInput').value = '';
-    document.getElementById('pwInput').focus();
-    setTimeout(()=>{ err.style.display='none'; }, 3000);
-  }
-}
-
-// ── SYNC BAR ──────────────────────────────────────────────────────────────
-function updateSyncBar(state, label, dotColor) {
-  const bar  = document.getElementById('syncBar');
-  const dot  = document.getElementById('syncDot');
-  const lbl  = document.getElementById('syncLabel');
-  bar.className = 'sync-bar ' + state;
-  lbl.textContent = label;
-  dot.style.background = dotColor || '';
-  dot.className = 'sync-dot' + (state==='saving'||state==='loading' ? ' pulse' : '');
-}
-
-function showToast(msg, duration=2500) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=> t.classList.remove('show'), duration);
-}
-
-// ── NAVIGATION ──────────────────────────────────────────────────────────────
-function showScreen(name, el) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  if(el) el.classList.add('active');
-  if(name === 'report') buildFranchiseCards();
-  if(name === 'settings') initSettingsScreen();
-}
-
-// ── WELCOME MODAL ────────────────────────────────────────────────────────────
-function showWelcome() {
-  document.getElementById('welcomeState').style.display = 'block';
-  document.getElementById('importWizard').style.display = 'none';
-  document.getElementById('welcomeModal').style.display = 'flex';
-}
-
-function showImportModal() { showWelcome(); }
-
-function closeModal() {
-  document.getElementById('welcomeModal').style.display = 'none';
-}
-
-function startImport() {
-  document.getElementById('welcomeState').style.display = 'none';
-  document.getElementById('importWizard').style.display = 'block';
-}
-
-// ── SOURCE CARDS ──────────────────────────────────────────────────────────────
-const loadedFiles = {};
-const srcOrder = ['gbp','lsa','wcc','wcj','ga4','gads','soc','inv'];
-const srcLabels = {
-  gbp:'Google Business Profile', lsa:'LSA Leads',
-  wcc:'WorkCentre Calls', wcj:'WorkCentre Jobs',
-  ga4:'Google Analytics 4', gads:'Google Ads',
-  soc:'Social Insights', inv:'Invoca Calls'
-};
-
-function toggleSrc(id) {
-  const card = document.getElementById(id);
-  card.classList.toggle('open');
-  const chev = card.querySelector('.src-card-chev');
-  if(chev) chev.textContent = card.classList.contains('open') ? '▲' : '▼';
-}
-
-function fileLoaded(src, input) {
-  const files = input.files;
-  if(!files.length) return;
-  loadedFiles[src] = files;
-  const names = Array.from(files).map(f=>f.name).join(', ');
-  document.getElementById('fl-'+src+'-name').textContent = names;
-  document.getElementById('fl-'+src).style.display = 'flex';
-  const idx = srcOrder.indexOf(src);
-  if(idx >= 0) {
-    document.getElementById('wd'+idx).classList.remove('active');
-    document.getElementById('wd'+idx).classList.add('done');
-    if(idx+1 < srcOrder.length) document.getElementById('wd'+(idx+1)).classList.add('active');
-  }
-  const count = Object.keys(loadedFiles).length;
-  document.getElementById('wizStatus').textContent = `${count} source${count>1?'s':''} loaded. Continue adding or open dashboard.`;
-  document.getElementById('wizLabel').textContent = `${count} of 8 sources loaded`;
-
-  // Parse and save to Sheets automatically
-  parseAndSaveFile(src, files);
-}
-
-// ── CSV PARSER ────────────────────────────────────────────────────────────────
-function parseCSV(text) {
-  const lines = text.split(/\r?\n/).filter(l=>l.trim());
-  return lines.map(line => {
-    const cells = []; let cur='', inQ=false;
-    for(let i=0;i<line.length;i++){
-      const ch=line[i];
-      if(ch==='"'){inQ=!inQ;}
-      else if(ch===','&&!inQ){cells.push(cur.trim());cur='';}
-      else{cur+=ch;}
-    }
-    cells.push(cur.trim());
-    return cells;
-  });
-}
-
-async function parseAndSaveFile(src, files) {
-  if(!SHEET_URL) return; // No Sheets connected — skip save
-
-  updateSyncBar('saving','Saving to Sheets…','#FFB300');
-
-  const today = new Date().toISOString().slice(0,7); // YYYY-MM
-  let allRows = [];
-
-  for(const file of Array.from(files)) {
-    try {
-      const text = await file.text();
-      const rows = parseCSV(text);
-      if(allRows.length === 0) allRows = rows;
-      else allRows = allRows.concat(rows.slice(1)); // append without header
-    } catch(e) {
-      console.error('Parse error:', e);
-    }
-  }
-
-  if(!allRows.length) return;
-
-  const tabName = `${src.toUpperCase()}_${today}`;
-  const meta = { source: srcLabels[src]||src, period: today, rows: allRows.length };
-
-  try {
-    const res = await sheetsRequest({ action:'save', tabName, rows:allRows, meta });
-    if(res.ok) {
-      updateSyncBar('saved','Saved to Sheets ✓','#00E5A0');
-      showToast(`${srcLabels[src]||src} saved to Google Sheets`);
-      setTimeout(()=>updateSyncBar('idle','Connected — data saved','#00E5A0'), 3000);
-      // Store locally too for offline fallback
-      localStorage.setItem(`servpro_${src}`, JSON.stringify({ tabName, rows:allRows.slice(0,5), savedAt: new Date().toISOString() }));
-    } else {
-      throw new Error(res.error||'Save failed');
-    }
-  } catch(e) {
-    updateSyncBar('error','Sheets save failed — check URL','#FF4757');
-    showToast('⚠ Sheets save failed — data not persisted', 4000);
-    console.error('Sheets save error:', e);
-  }
-}
-
-// ── SHEETS API ────────────────────────────────────────────────────────────────
-async function sheetsRequest(payload) {
-  const res = await fetch(SHEET_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-    mode: 'no-cors' // Apps Script deployed as Anyone can use no-cors
-  });
-  // no-cors returns opaque response — we treat success as ok:true
-  // For real error checking, check the Sheet itself
-  return { ok: true };
-}
-
-async function sheetsGet(payload) {
-  const params = new URLSearchParams({ data: JSON.stringify(payload) });
-  try {
-    const res = await fetch(SHEET_URL + '?' + params);
-    return await res.json();
-  } catch(e) {
-    return { ok:false, error:e.toString() };
-  }
-}
-
-// ── LOAD FROM SHEETS ─────────────────────────────────────────────────────────
-async function loadFromSheets() {
-  if(!SHEET_URL) {
-    updateSyncBar('idle','Not connected to Sheets','#C4BEDB');
+async function analyzeTranscripts() {
+  const text = document.getElementById('transcriptInput').value.trim();
+  if (!text || text.length < 50) {
+    alert('Please paste at least one call transcript before analyzing.');
     return;
   }
-  updateSyncBar('loading','Loading from Sheets…','#6C3FFF');
+
+  const franchise = document.getElementById('franchise').value;
+  const period = document.getElementById('period').value || 'this period';
+  const focus = document.getElementById('focus').value;
+
+  const franchiseLabel = {
+    'all': 'All franchises', 'ebensburg': 'Ebensburg',
+    'altoona': 'Altoona', 'happy-valley': 'Happy Valley',
+    's-blair': 'S. Blair/Bedford', 'indiana': 'Indiana County'
+  }[franchise];
+
+  const focusLabel = {
+    'general': '', 'water': ' — focus: water damage calls',
+    'mold': ' — focus: mold calls', 'fire': ' — focus: fire damage calls',
+    'commercial': ' — focus: commercial leads', 'notsold': ' — focus: not-sold calls',
+    'adcopy': ' — focus: ad copy & content'
+  }[focus];
+
+  const userMsg = `Please analyze these Invoca call transcripts from SERVPRO of ${franchiseLabel} for ${period}${focusLabel}.
+
+${text}`;
+
+  document.getElementById('analyzeBtn').disabled = true;
+  document.getElementById('loadingIndicator').classList.add('show');
+  document.getElementById('results').classList.remove('show');
+
   try {
-    const res = await sheetsGet({ action:'list' });
-    if(res && res.ok && res.datasets) {
-      const count = res.datasets.length;
-      updateSyncBar('saved', `Connected — ${count} dataset${count!==1?'s':''} loaded`, '#00E5A0');
-      showToast(`Loaded ${count} dataset${count!==1?'s':''} from Sheets`);
-      renderSavedDatasets(res.datasets);
-    } else {
-      updateSyncBar('idle','Connected — no data yet','#00E5A0');
-    }
-  } catch(e) {
-    updateSyncBar('error','Could not reach Sheets','#FF4757');
-  }
-}
-
-function renderSavedDatasets(datasets) {
-  const el = document.getElementById('savedDatasets');
-  if(!el) return;
-  if(!datasets.length) {
-    el.innerHTML = '<div style="color:var(--text-muted);font-size:13px;">No datasets saved yet. Import your first CSV to get started.</div>';
-    return;
-  }
-  el.innerHTML = `<table class="data-table">
-    <thead><tr><th>Source</th><th>Period</th><th>Rows</th><th>Saved</th><th></th></tr></thead>
-    <tbody>${datasets.map(d=>`
-      <tr>
-        <td style="font-weight:600;color:var(--text);">${d.source||d.tabName}</td>
-        <td><span class="period-tag">${d.period||'—'}</span></td>
-        <td style="font-family:monospace;">${Number(d.rows).toLocaleString()}</td>
-        <td style="color:var(--text-muted);font-size:11px;">${d.savedAt ? new Date(d.savedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'}</td>
-        <td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px;" onclick="loadDataset('${d.tabName}')">Load</button></td>
-      </tr>`).join('')}
-    </tbody>
-  </table>`;
-}
-
-async function loadDataset(tabName) {
-  if(!SHEET_URL) return;
-  updateSyncBar('loading','Loading dataset…','#6C3FFF');
-  try {
-    const res = await sheetsGet({ action:'load', tabName });
-    if(res && res.ok) {
-      showToast(`Loaded ${tabName}`);
-      updateSyncBar('saved',`${tabName} active`,'#00E5A0');
-    }
-  } catch(e) {
-    showToast('Load failed');
-  }
-}
-
-// ── SETTINGS SCREEN ───────────────────────────────────────────────────────────
-function initSettingsScreen() {
-  const input = document.getElementById('sheetsUrlInput');
-  if(input) input.value = SHEET_URL;
-  if(SHEET_URL) loadSavedDatasetsList();
-  else {
-    const el = document.getElementById('savedDatasets');
-    if(el) el.innerHTML = '<div style="color:var(--text-muted);font-size:13px;">Connect to Google Sheets above to see your saved datasets.</div>';
-  }
-}
-
-function saveSheetUrl() {
-  const url = document.getElementById('sheetsUrlInput').value.trim();
-  if(!url || !url.startsWith('https://')) {
-    showResult('Please paste a valid https:// URL from Google Apps Script.','error');
-    return;
-  }
-  SHEET_URL = url;
-  localStorage.setItem('servpro_sheet_url', url);
-  testConnection();
-}
-
-function clearSheetUrl() {
-  SHEET_URL = '';
-  localStorage.removeItem('servpro_sheet_url');
-  document.getElementById('sheetsUrlInput').value = '';
-  updateSyncBar('idle','Not connected to Sheets','#C4BEDB');
-  showResult('Disconnected from Google Sheets.','info');
-}
-
-async function testConnection() {
-  if(!SHEET_URL) { showResult('No URL saved yet.','error'); return; }
-  updateSyncBar('loading','Testing connection…','#6C3FFF');
-  try {
-    const res = await sheetsGet({ action:'ping' });
-    if(res && res.ok) {
-      updateSyncBar('saved','Connected to Sheets ✓','#00E5A0');
-      showResult('✓ Connected! Your Google Sheet is ready to receive data.','success');
-      loadSavedDatasetsList();
-    } else {
-      throw new Error(res.error||'ping failed');
-    }
-  } catch(e) {
-    updateSyncBar('error','Connection failed','#FF4757');
-    showResult('✗ Could not connect. Check that your Apps Script URL is correct and the deployment is set to "Anyone" access.','error');
-  }
-}
-
-async function loadSavedDatasetsList() {
-  if(!SHEET_URL) return;
-  try {
-    const res = await sheetsGet({ action:'list' });
-    if(res && res.ok) renderSavedDatasets(res.datasets||[]);
-  } catch(e) { /* silent */ }
-}
-
-function showResult(msg, type) {
-  const el = document.getElementById('connectionResult');
-  if(!el) return;
-  el.style.display = 'block';
-  el.style.background = type==='success'?'var(--lime-bg)':type==='error'?'var(--pop-bg)':'var(--sky-bg)';
-  el.style.color = type==='success'?'#00A370':type==='error'?'var(--pop)':'#007ACC';
-  el.style.border = type==='success'?'1px solid rgba(0,229,160,0.3)':type==='error'?'1px solid rgba(255,71,87,0.3)':'1px solid rgba(0,194,255,0.3)';
-  el.style.borderRadius = '9px';
-  el.style.padding = '10px 14px';
-  el.textContent = msg;
-}
-
-function exportSheetBackup() {
-  const backup = { exportedAt: new Date().toISOString(), sources: {} };
-  srcOrder.forEach(src => {
-    const stored = localStorage.getItem(`servpro_${src}`);
-    if(stored) backup.sources[src] = JSON.parse(stored);
-  });
-  const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `SERVPRO_Intel_Backup_${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  showToast('Backup downloaded');
-}
-
-function downloadAppsScript() {
-  const blob = new Blob([APPS_SCRIPT_CODE], {type:'text/plain'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'Code.gs';
-  a.click();
-  showToast('Code.gs downloaded');
-}
-
-// ── FRANCHISE REPORT CARDS ────────────────────────────────────────────────────
-
-const frData = [
-  { name:'SERVPRO of Ebensburg', color:'linear-gradient(135deg,#6C3FFF,#FF2D78)', score:78, scoreColor:'#6C3FFF',
-    metrics:[['Revenue','$79,388'],['Rev/call','$656'],['Jobs closed','77'],['In progress','2'],['LSA leads','10'],['Avg est.','$7,503']],
-    status:'strong',
-    actions:['Increase LSA budget immediately — at $656/call you have the highest ROI in the network. Target 20+ leads/month.',
-             'Launch not-sold follow-up: 67 quotes at $7,503 avg = $502k in unconverted pipeline. 3-touch sequence.',
-             'Build brand awareness in Cambria County — zero direct brand searches on LSA means no one is searching your name.'] },
-  { name:'SERVPRO of Altoona', color:'#00C2FF', score:52, scoreColor:'#00A0CC',
-    metrics:[['Revenue','$31,931'],['Rev/call','$363'],['Jobs closed','45'],['In progress','8'],['LSA leads','4'],['GBP dir.','0 ⚠']],
-    status:'warn',
-    actions:['Fix GBP map pin today — 10-minute fix that recovers all direction request traffic.',
-             'Grow LSA presence — only 4 leads vs Happy Valley\'s 34. Expanding LSA coverage area and service categories will lift lead volume.',
-             'Launch water damage content campaign — 55 water jobs, web search is the #1 referral source.'] },
-  { name:'SERVPRO of Happy Valley', color:'#00E5A0', score:81, scoreColor:'#00A370',
-    metrics:[['Revenue','$30,738'],['Rev/call','$375'],['Jobs closed','58'],['In progress','6'],['LSA leads','34'],['Close rate','42.3%']],
-    status:'strong',
-    actions:['Document call intake SOP — best in network, share as training guide with other franchises.',
-             'Target commercial accounts — avg estimate $3,819 is lowest in network, commercial work will lift it significantly.',
-             'Maintain LSA investment — 20 direct brand searches is the strongest brand recognition signal in the network.'] },
-  { name:'SERVPRO of S. Blair/Bedford', color:'#FF4757', score:31, scoreColor:'#FF4757',
-    metrics:[['Revenue','$10,147'],['Rev/call','$267'],['Jobs closed','30'],['In progress','4'],['LSA leads','4'],['GBP dir.','0 ⚠']],
-    status:'danger',
-    actions:['Full reset needed: fix GBP map pin, add a second listing for Bedford County specifically.',
-             'Expand LSA service area radius to cover all of Bedford County and surrounding areas.',
-             'Launch a targeted mold campaign — mold is 19% of jobs (above 12% network average), summer peak approaching.'] },
-  { name:'SERVPRO of Indiana County', color:'#FFB300', score:43, scoreColor:'#CC8F00',
-    metrics:[['Revenue','$11,231'],['Rev/call','$216'],['Jobs closed','48'],['In progress','4'],['LSA leads','23'],['Not sold','55 jobs']],
-    status:'danger',
-    actions:['Launch a follow-up campaign for 55 not-sold jobs × $6,509 avg estimate = $357k in unconverted pipeline.',
-             'Not-sold follow-up: 55 jobs × $6,509 avg = $357k. 3-touch sequence at Day 3, Day 10, Day 21.',
-             'Shift LSA and content focus from General Cleaning to Water + Mold to attract higher-value jobs.'] }
-];
-
-function buildFranchiseCards() {
-  const c = document.getElementById('franchiseCards');
-  c.innerHTML = frData.map((f,i) => `
-  <div class="rfc" id="rfc-${i}">
-    <div class="rfc-hdr" onclick="toggleRFC(${i})">
-      <div class="rfc-hdr-left">
-        <div class="rfc-stripe" style="background:${f.color};"></div>
-        <div>
-          <div class="rfc-name">${f.name}</div>
-          <div class="rfc-meta">${f.status==='strong'?'<span class="tag tag-lime">On track</span>':f.status==='warn'?'<span class="tag tag-sun">Needs attention</span>':'<span class="tag tag-pop">Urgent action</span>'}</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:14px;">
-        <div class="rfc-score" style="color:${f.scoreColor};">${f.score}<span style="font-size:14px;font-weight:500;color:var(--text-muted);">/100</span></div>
-        <span class="rfc-chev">▼</span>
-      </div>
-    </div>
-    <div class="rfc-body">
-      <div class="rfc-metrics">
-        ${f.metrics.map(([l,v])=>`<div class="rfc-metric-cell"><div class="rm-label">${l}</div><div class="rm-val">${v}</div></div>`).join('')}
-      </div>
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px;">Recommended actions</div>
-      <div class="action-list">
-        ${f.actions.map((a,j)=>`<div class="action-item"><div class="action-num">${j+1}</div><div>${a}</div></div>`).join('')}
-      </div>
-      <button class="btn btn-outline" style="margin-top:12px;font-size:12px;" onclick="sendToAI('Generate a detailed one-page performance briefing for ${f.name} based on Jan-Apr 2026 data with all metrics and 5 specific recommended actions.')">✦ Generate detailed briefing →</button>
-    </div>
-  </div>`).join('');
-}
-
-function toggleRFC(i) {
-  const el = document.getElementById('rfc-'+i);
-  el.classList.toggle('open');
-}
-
-// ── AI PANEL ──────────────────────────────────────────────────────────────────
-let aiOpen = false;
-let history = [];
-
-const CONTEXT = `You are a master business strategist and digital marketing analyst specializing in restoration and reconstruction businesses. You have the following SERVPRO Central Pennsylvania network data for Jan 1 – Apr 26, 2026:
-
-GOOGLE BUSINESS PROFILE:
-- Ebensburg: 2,307 views, 202 calls, 682 directions, 164 web clicks
-- Altoona: 1,435 views, 66 calls, 0 directions (MAP PIN MISSING), 66 web clicks
-- Happy Valley: 1,591 views, 22 calls, 147 directions, 67 web clicks
-- S. Blair/Bedford: 1,041 views, 17 calls, 0 directions (MAP PIN MISSING), 29 web clicks
-- Indiana County: 2,095 views, 46 calls, 161 directions, 91 web clicks
-
-WORKCENTER CALLS:
-- Ebensburg: 121 connected calls, 34 leads, 5 jobs, $79,388 revenue, $656/call
-- Altoona: 88 connected calls, 38 leads, 6 jobs, $31,931, $363/call
-- Happy Valley: 82 connected calls, 43 leads, 9 jobs, $30,738, $375/call
-- S. Blair/Bedford: 38 connected calls, 15 leads, 3 jobs, $10,147, $267/call
-- Indiana County: 52 connected calls, 23 leads, 6 jobs, $11,231, $216/call
-
-WORKCENTER JOBS (707 total):
-- Loss types: Water 322 (46%), General Cleaning 108 (15%), Mold 86 (12%), Reconstruction 62 (9%)
-- Status: 258 closed (36.5%), 248 not sold (35.1%), 201 in progress
-- Avg estimates: Ebensburg $7,503, Indiana $6,509, Altoona $6,199, S.Blair $5,580, Happy Valley $3,819
-- Top referral: Web search #1 network-wide
-
-LSA LEADS (85 unique):
-- Happy Valley: 34 (20 direct brand, 14 categorical)
-- Indiana County: 23 (17 direct brand, 6 categorical)
-- Ebensburg: 10 (all categorical, 0 brand)
-- Altoona: 4, S. Blair: 4
-- Job types: 45 unknown (53%), 17 water, 16 mold, 6 fire
-- Monthly: Jan 19, Feb 21, Mar 24, Apr 21
-
-KEY ISSUES: 248 not-sold jobs = $1.5M pipeline, Altoona/S.Blair zero GBP directions, 53% LSA leads no job type, Indiana County low revenue per call ($216).
-MISSING DATA: Google Ads spend, GA4, Social insights, Invoca transcripts.
-
-Be specific, cite real numbers, think like a CMO and operations consultant combined. Be direct and action-oriented.`;
-
-function toggleAI() {
-  aiOpen = !aiOpen;
-  document.getElementById('aiPanel').classList.toggle('open', aiOpen);
-  document.getElementById('aiFab').style.display = aiOpen ? 'none' : 'flex';
-}
-
-function sendToAI(msg) {
-  if(!aiOpen) toggleAI();
-  document.getElementById('aiInput').value = msg;
-  setTimeout(sendMsg, 80);
-}
-
-async function sendMsg() {
-  const input = document.getElementById('aiInput');
-  const msg = input.value.trim();
-  if(!msg) return;
-  input.value = '';
-  addMsg('user', msg);
-  const thinking = addThinking();
-  history.push({ role:'user', content:msg });
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, system:CONTEXT, messages:history })
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM,
+        messages: [{ role: 'user', content: userMsg }]
+      })
     });
-    const data = await res.json();
-    thinking.remove();
-    const reply = data.content?.[0]?.text || 'Sorry, something went wrong. Please try again.';
-    addMsg('assistant', reply);
-    history.push({ role:'assistant', content:reply });
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'No response received. Please try again.';
+
+    document.getElementById('analysisOutput').textContent = reply;
+    document.getElementById('resultsTitle').textContent = `${franchiseLabel} — Call Analysis`;
+    document.getElementById('resultsMeta').textContent = `${period}${focusLabel} · ${new Date().toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'})}`;
+    document.getElementById('results').classList.add('show');
+
+    // Auto-scroll to results
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Store for save
+    window._lastAnalysis = { franchise: franchiseLabel, period, focus: focusLabel, text: reply, date: new Date().toISOString(), transcriptLength: text.length };
+
   } catch(e) {
-    thinking.remove();
-    addMsg('assistant', 'Connection error. Make sure the app is running in a Claude artifact or server context with API access. Your data is fully loaded — try again in a moment.');
+    document.getElementById('analysisOutput').textContent = 'Connection error: ' + e.message + '\n\nMake sure you are opening this file from your live GitHub Pages URL, not directly from your computer.';
+    document.getElementById('results').classList.add('show');
   }
+
+  document.getElementById('analyzeBtn').disabled = false;
+  document.getElementById('loadingIndicator').classList.remove('show');
 }
 
-function addMsg(role, text) {
-  const msgs = document.getElementById('aiMsgs');
-  const d = document.createElement('div');
-  d.className = 'ai-msg ' + role;
-  d.textContent = text;
-  msgs.appendChild(d);
-  msgs.scrollTop = msgs.scrollHeight;
-  return d;
+function clearInput() {
+  document.getElementById('transcriptInput').value = '';
+  document.getElementById('charCount').textContent = '0 characters';
+  document.getElementById('charCount').className = 'char-count';
+  document.getElementById('results').classList.remove('show');
 }
 
-function addThinking() {
-  const msgs = document.getElementById('aiMsgs');
-  const d = document.createElement('div');
-  d.className = 'ai-msg assistant';
-  d.innerHTML = '<div class="thinking"><span></span><span></span><span></span></div>';
-  msgs.appendChild(d);
-  msgs.scrollTop = msgs.scrollHeight;
-  return d;
+function copyResults() {
+  const text = document.getElementById('analysisOutput').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy full report', 2000);
+  });
 }
+
+function saveToHistory() {
+  if (!window._lastAnalysis) return;
+  savedAnalyses.unshift(window._lastAnalysis);
+  if (savedAnalyses.length > 20) savedAnalyses = savedAnalyses.slice(0, 20);
+  localStorage.setItem('servpro_call_analyses', JSON.stringify(savedAnalyses));
+  renderHistory();
+  const btn = event.target;
+  btn.textContent = 'Saved!';
+  setTimeout(() => btn.textContent = 'Save to history', 2000);
+}
+
+function renderHistory() {
+  const el = document.getElementById('historyList');
+  if (!savedAnalyses.length) {
+    el.innerHTML = '<div class="empty-history">No saved analyses yet. Run your first analysis and click "Save to history."</div>';
+    return;
+  }
+  el.innerHTML = savedAnalyses.map((a, i) => `
+    <div class="history-item" onclick="loadHistory(${i})">
+      <div class="hi-left">
+        <div class="hi-label">${a.franchise}${a.focus || ''}</div>
+        <div class="hi-meta">${a.period} · Saved ${new Date(a.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} · ${(a.transcriptLength||0).toLocaleString()} chars analyzed</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="hi-count">View</span>
+        <button onclick="event.stopPropagation();deleteHistory(${i})" style="background:var(--pop-bg);border:none;border-radius:5px;padding:3px 8px;font-size:11px;color:var(--pop);font-weight:700;cursor:pointer;">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+function loadHistory(i) {
+  const a = savedAnalyses[i];
+  document.getElementById('analysisOutput').textContent = a.text;
+  document.getElementById('resultsTitle').textContent = `${a.franchise} — Call Analysis`;
+  document.getElementById('resultsMeta').textContent = `${a.period}${a.focus || ''} · ${new Date(a.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}`;
+  document.getElementById('results').classList.add('show');
+  window._lastAnalysis = a;
+  document.getElementById('results').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function deleteHistory(i) {
+  savedAnalyses.splice(i, 1);
+  localStorage.setItem('servpro_call_analyses', JSON.stringify(savedAnalyses));
+  renderHistory();
+}
+
+renderHistory();
 </script>
-<div class="toast" id="toast"></div>
 </body>
 </html>
