@@ -1687,12 +1687,12 @@ async function checkPw() {
   if(hash === PW_HASH || val === 'SERVPRO2026') {
     document.getElementById('gate').style.display = 'none';
     document.getElementById('app').classList.add('visible');
-    // Try to load data from Sheets on login
     if(SHEET_URL) {
       updateSyncBar('loading','Connecting to Sheets…','#6C3FFF');
       await loadFromSheets();
     }
     showWelcome();
+    renderCIHistory();
   } else {
     const err = document.getElementById('pwError');
     err.style.display = 'block';
@@ -1724,10 +1724,14 @@ function showToast(msg, duration=2500) {
 function showScreen(name, el) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
+  const screen = document.getElementById('screen-'+name);
+  if(!screen) return;
+  screen.classList.add('active');
   if(el) el.classList.add('active');
   if(name === 'report') buildFranchiseCards();
   if(name === 'settings') initSettingsScreen();
+  if(name === 'callintel') renderCIHistory();
+  if(name === 'content') renderContentLibrary('all');
 }
 
 // ── WELCOME MODAL ────────────────────────────────────────────────────────────
@@ -2346,13 +2350,7 @@ function filterContent(type, btn) {
   renderContentLibrary(type);
 }
 
-// Init on screen load
-const _origShowScreen = showScreen;
-function showScreen(name, el) {
-  _origShowScreen(name, el);
-  if (name === 'callintel') renderCIHistory();
-  if (name === 'content') renderContentLibrary('all');
-}
+// Screen init handled in main showScreen function
 
 </script>
 <div class="toast" id="toast"></div>
